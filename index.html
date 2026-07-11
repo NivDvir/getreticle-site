@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reticle — finds and marks what you name, on any screen. On-device.</title>
+  <meta name="description" content="Reticle is an on-device perception layer that finds and marks the control or content you name — on any app, any surface, from your point of view. Nothing leaves your machine.">
+
+  <!-- Open Graph / social preview -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Reticle">
+  <meta property="og:url" content="https://getreticle.com/">
+  <meta property="og:title" content="Reticle — finds and marks what you name, on any screen. On-device.">
+  <meta property="og:description" content="An on-device perception layer that finds and marks the control or content you name — on any app, any surface, from your point of view. Nothing leaves your machine.">
+  <meta property="og:image" content="https://gist.githubusercontent.com/NivDvir/adb530c3b070687a6c80aa9c9ee6d079/raw/reticle_reader_demo_thumb.jpg">
+  <meta property="og:image:alt" content="Reticle running on macOS: it finds and marks named content on a live page, on-device.">
+
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Reticle — finds and marks what you name, on any screen. On-device.">
+  <meta name="twitter:description" content="An on-device perception layer that finds and marks the control or content you name — on any app, any surface, from your point of view. Nothing leaves your machine.">
+  <meta name="twitter:image" content="https://gist.githubusercontent.com/NivDvir/adb530c3b070687a6c80aa9c9ee6d079/raw/reticle_reader_demo_thumb.jpg">
+
+  <!-- Inline SVG favicon (reticle mark — no external asset) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Ccircle%20cx='16'%20cy='16'%20r='11'%20fill='none'%20stroke='%23e8552b'%20stroke-width='3'/%3E%3Ccircle%20cx='16'%20cy='16'%20r='4.5'%20fill='%23e8552b'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-soft: #f5f6f8;
+      --fg: #16181d;
+      --fg-soft: #4a4f5a;
+      --fg-faint: #6b7280;
+      --accent: #e8552b;
+      --accent-soft: rgba(232, 85, 43, 0.10);
+      --border: #e4e6eb;
+      --card: #ffffff;
+      --shadow: 0 1px 3px rgba(0,0,0,.06), 0 8px 30px rgba(0,0,0,.05);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0d0f13;
+        --bg-soft: #14171d;
+        --fg: #f2f4f8;
+        --fg-soft: #b6bcc8;
+        --fg-faint: #858c9a;
+        --accent: #ff6a3d;
+        --accent-soft: rgba(255, 106, 61, 0.12);
+        --border: #232830;
+        --card: #14171d;
+        --shadow: 0 1px 3px rgba(0,0,0,.4), 0 12px 40px rgba(0,0,0,.35);
+      }
+    }
+    :root[data-theme="light"] {
+      --bg: #ffffff; --bg-soft: #f5f6f8; --fg: #16181d; --fg-soft: #4a4f5a;
+      --fg-faint: #6b7280; --accent: #e8552b; --accent-soft: rgba(232,85,43,.10);
+      --border: #e4e6eb; --card: #ffffff; --shadow: 0 1px 3px rgba(0,0,0,.06), 0 8px 30px rgba(0,0,0,.05);
+    }
+    :root[data-theme="dark"] {
+      --bg: #0d0f13; --bg-soft: #14171d; --fg: #f2f4f8; --fg-soft: #b6bcc8;
+      --fg-faint: #858c9a; --accent: #ff6a3d; --accent-soft: rgba(255,106,61,.12);
+      --border: #232830; --card: #14171d; --shadow: 0 1px 3px rgba(0,0,0,.4), 0 12px 40px rgba(0,0,0,.35);
+    }
+
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      font-size: 17px;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+    img { max-width: 100%; height: auto; display: block; }
+
+    /* Hero */
+    header.hero { padding: 72px 0 40px; }
+    .brand {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-weight: 700; letter-spacing: -0.01em; font-size: 15px;
+      color: var(--fg-faint); text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+    .brand .dot {
+      width: 12px; height: 12px; border-radius: 50%;
+      border: 2.5px solid var(--accent);
+      position: relative;
+    }
+    .brand .dot::after {
+      content: ""; position: absolute; inset: 2.5px;
+      border-radius: 50%; background: var(--accent);
+    }
+    h1 {
+      font-size: clamp(30px, 6vw, 46px);
+      line-height: 1.12;
+      letter-spacing: -0.025em;
+      margin: 0 0 18px;
+      font-weight: 800;
+    }
+    h1 .accent { color: var(--accent); }
+    .lede {
+      font-size: clamp(17px, 2.4vw, 20px);
+      color: var(--fg-soft);
+      margin: 0 0 32px;
+      max-width: 620px;
+    }
+
+    /* Demo */
+    figure.demo {
+      margin: 0 0 8px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      background: var(--bg-soft);
+    }
+    figure.demo img { width: 100%; }
+    figcaption {
+      font-size: 13.5px; color: var(--fg-faint);
+      margin-top: 12px; text-align: center;
+    }
+
+    /* Sections */
+    section { padding: 40px 0; border-top: 1px solid var(--border); }
+    section:first-of-type { border-top: none; }
+    h2 {
+      font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--fg-faint); margin: 0 0 16px; font-weight: 700;
+    }
+    p { margin: 0 0 18px; color: var(--fg-soft); }
+    p:last-child { margin-bottom: 0; }
+    .body-lg { font-size: 18px; color: var(--fg); }
+    strong { color: var(--fg); font-weight: 650; }
+
+    /* Credibility strip */
+    .cred {
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px 24px;
+    }
+    .cred p { margin: 0; color: var(--fg); font-size: 16px; }
+    .cred .prs { margin-top: 10px; font-size: 15px; color: var(--fg-faint); }
+    .cred .prs a { font-weight: 600; }
+
+    /* CTA */
+    .cta { text-align: center; padding: 52px 0 40px; }
+    .cta h2 { color: var(--fg-faint); }
+    .cta .big {
+      font-size: clamp(22px, 4vw, 28px);
+      font-weight: 800; letter-spacing: -0.02em;
+      color: var(--fg); margin: 0 0 24px;
+    }
+    .btn {
+      display: inline-block;
+      background: var(--accent); color: #fff;
+      padding: 14px 30px; border-radius: 10px;
+      font-weight: 700; font-size: 17px;
+      letter-spacing: -0.01em;
+    }
+    .btn:hover { text-decoration: none; opacity: .92; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 0 48px;
+      text-align: center;
+      color: var(--fg-faint);
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header class="hero">
+      <div class="brand"><span class="dot"></span> Reticle</div>
+      <h1>Finds and marks what you name, <span class="accent">on any screen.</span><br>On-device.</h1>
+      <p class="lede">Name a control or a piece of content. Reticle locates it and marks it, right where it lives — on any app, any surface, from your exact point of view. Nothing leaves your machine.</p>
+      <figure class="demo">
+        <img src="https://gist.githubusercontent.com/NivDvir/adb530c3b070687a6c80aa9c9ee6d079/raw/reticle_reader_demo_small.gif" alt="Reticle running on macOS: it finds and marks named content on a live page, on-device." loading="lazy" width="1000">
+        <figcaption>On-device grounding on macOS — finds and marks named content on a live page.</figcaption>
+      </figure>
+    </header>
+
+    <section>
+      <h2>What it is</h2>
+      <p class="body-lg">A second pair of eyes for your screen. It closes the gap between what you see and what's actually there — and marks up what it finds on a layer laid over the content, like acetate, never touching what's underneath. It's <strong>loyal to you by construction</strong>: it runs on your machine, only ever reads — never alters — and can do only what you could do yourself, in plain sight. And it perceives your screen the way you do, on <strong>any app</strong> — so it works where tools that read the code underneath come up empty.</p>
+    </section>
+
+    <section>
+      <h2>The proof under the hood</h2>
+      <div class="cred">
+        <p>The Qwen2.5-VL fixes that make on-device grounding reliable in Swift were written by Niv and <strong>merged upstream into Apple's mlx-swift-lm</strong>.</p>
+        <p class="prs">Merged:
+          <a href="https://github.com/ml-explore/mlx-swift-lm/pull/238" target="_blank" rel="noopener">#238</a> ·
+          <a href="https://github.com/ml-explore/mlx-swift-lm/pull/239" target="_blank" rel="noopener">#239</a> ·
+          <a href="https://github.com/ml-explore/mlx-swift-lm/pull/242" target="_blank" rel="noopener">#242</a> ·
+          <a href="https://github.com/ml-explore/mlx-swift-lm/pull/243" target="_blank" rel="noopener">#243</a>
+          &nbsp;·&nbsp;
+          <a href="https://dev.to/nivdvir/building-a-real-time-screen-reader-on-macos-that-actually-works-471" target="_blank" rel="noopener">Read the write-up →</a>
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Where it reaches that others can't</h2>
+      <p>Native controls, canvas-drawn UIs, remote/VDI desktops — the surfaces where a screen reader returns nothing because there's no accessibility tree to read. Reticle works from the pixels and your point of view, so it perceives those surfaces the way you do. It <strong>complements</strong> the assistive tools you already use — it doesn't replace them — making the parts they can't see perceivable alongside them.</p>
+    </section>
+
+    <div class="cta">
+      <h2>Get in touch</h2>
+      <p class="big">Worth 20 minutes?</p>
+      <a class="btn" href="mailto:niv@getreticle.com?subject=Reticle%20%E2%80%94%2020%20minutes%3F">Email me</a>
+    </div>
+
+    <footer>
+      &copy; 2026 Reticle &middot; Niv Dvir
+    </footer>
+
+  </div>
+</body>
+</html>
