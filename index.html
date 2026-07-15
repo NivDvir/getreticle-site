@@ -123,7 +123,7 @@
       box-shadow: var(--shadow);
       background: var(--bg-soft);
     }
-    figure.demo img { width: 100%; }
+    figure.demo img, figure.demo video { width: 100%; display: block; }
     figcaption {
       font-size: 13.5px; color: var(--fg-faint);
       margin-top: 12px; text-align: center;
@@ -186,8 +186,12 @@
       <h1>Finds and marks what you name, <span class="accent">on any screen.</span><br>On-device.</h1>
       <p class="lede">Name a control or a piece of content. Reticle locates it and marks it, right where it lives — on any app, any surface, from your exact point of view. Nothing leaves your machine.</p>
       <figure class="demo">
-        <img src="https://gist.githubusercontent.com/NivDvir/adb530c3b070687a6c80aa9c9ee6d079/raw/reticle_reader_demo_small.gif" alt="Reticle running on macOS: it finds and marks named content on a live page, on-device." loading="lazy" width="800" height="520">
-        <figcaption>On-device grounding on macOS — finds and marks named content on a live page.</figcaption>
+        <video controls preload="none" playsinline width="800" height="520"
+               poster="https://gist.githubusercontent.com/NivDvir/adb530c3b070687a6c80aa9c9ee6d079/raw/reticle_reader_demo_thumb.jpg">
+          <source src="/reticle_demo_yc_2026-07.mp4" type="video/mp4">
+          <img src="https://gist.githubusercontent.com/NivDvir/adb530c3b070687a6c80aa9c9ee6d079/raw/reticle_reader_demo_small.gif" alt="Reticle running on macOS: it finds and marks named content on a live page, on-device." loading="lazy" width="800" height="520">
+        </video>
+        <figcaption>On-device grounding on macOS — finds and marks named content across a live web page and a native app. Press play.</figcaption>
       </figure>
     </header>
 
@@ -204,7 +208,8 @@
           <a href="https://github.com/ml-explore/mlx-swift-lm/pull/238" target="_blank" rel="noopener">#238</a> ·
           <a href="https://github.com/ml-explore/mlx-swift-lm/pull/239" target="_blank" rel="noopener">#239</a> ·
           <a href="https://github.com/ml-explore/mlx-swift-lm/pull/242" target="_blank" rel="noopener">#242</a> ·
-          <a href="https://github.com/ml-explore/mlx-swift-lm/pull/243" target="_blank" rel="noopener">#243</a>
+          <a href="https://github.com/ml-explore/mlx-swift-lm/pull/243" target="_blank" rel="noopener">#243</a> ·
+          <a href="https://github.com/ml-explore/mlx-swift-lm/pull/419" target="_blank" rel="noopener">#419</a>
           &nbsp;·&nbsp;
           <a href="https://dev.to/nivdvir/building-a-real-time-screen-reader-on-macos-that-actually-works-471" target="_blank" rel="noopener">Read the write-up →</a>
         </p>
