@@ -177,6 +177,63 @@
       font-size: 14px;
     }
   </style>
+  <!-- Structured data: what this is, who made it, and where else it lives. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://getreticle.com/#reticle",
+        "name": "Reticle",
+        "alternateName": "Reticle grounding SDK",
+        "url": "https://getreticle.com/",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "macOS",
+        "description": "Reticle is a non-invasive AI layer between you and your machine: it reads only the pixels you see and answers only in its own overlay — finding and marking the control or content you name, on any app, any surface. Nothing leaves your machine.",
+        "featureList": [
+          "Finds and marks named on-screen content on any app or surface",
+          "Runs entirely on-device; no screen data leaves the machine",
+          "Reads rendered pixels only, never an application's internals",
+          "Answers in its own overlay layer, never modifying the content underneath",
+          "Works on native controls, canvas-drawn UIs and remote/VDI desktops"
+        ],
+        "image": "https://gist.githubusercontent.com/NivDvir/adb530c3b070687a6c80aa9c9ee6d079/raw/reticle_reader_demo_thumb.jpg",
+        "inLanguage": "en",
+        "author": { "@id": "https://getreticle.com/#nivdvir" },
+        "creator": { "@id": "https://getreticle.com/#nivdvir" },
+        "publisher": { "@id": "https://getreticle.com/#nivdvir" }
+      },
+      {
+        "@type": "Person",
+        "@id": "https://getreticle.com/#nivdvir",
+        "name": "Niv Dvir",
+        "url": "https://getreticle.com/",
+        "email": "mailto:niv@getreticle.com",
+        "knowsAbout": [
+          "On-device vision-language models",
+          "Swift",
+          "Apple MLX",
+          "macOS accessibility and screen understanding",
+          "GUI grounding"
+        ],
+        "sameAs": [
+          "https://github.com/NivDvir",
+          "https://dev.to/nivdvir"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://getreticle.com/#website",
+        "url": "https://getreticle.com/",
+        "name": "Reticle",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://getreticle.com/#nivdvir" },
+        "about": { "@id": "https://getreticle.com/#reticle" }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <div class="wrap">
