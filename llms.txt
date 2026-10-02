@@ -12,7 +12,8 @@ and remote/VDI desktops.
 
 ## The site
 
-- [Reticle](https://getreticle.com/): what it is, what it reaches that others can't, and a live demo.
+- [Reticle](https://getreticle.com/): what it is, what it reaches that others can't, and a one-minute film.
+- [Reticle in one minute](https://getreticle.com/reticle_acetate_film.mp4): the film on the home page — a pane of glass over the screen that finds and marks what matters, and never touches what's underneath.
 - [Demo video](https://getreticle.com/reticle_demo_yc_2026-07.mp4): on-device grounding across a live web page and a native app.
 
 ## Engineering write-ups
