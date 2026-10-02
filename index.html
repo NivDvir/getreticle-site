@@ -123,7 +123,7 @@
       box-shadow: var(--shadow);
       background: var(--bg-soft);
     }
-    figure.demo img, figure.demo video { width: 100%; display: block; }
+    figure.demo img, figure.demo video { width: 100%; height: auto; display: block; }
     figcaption {
       font-size: 13.5px; color: var(--fg-faint);
       margin-top: 12px; text-align: center;
@@ -243,12 +243,13 @@
       <h1>Finds and marks what you name, <span class="accent">on any screen.</span><br>On-device.</h1>
       <p class="lede">Name a control or a piece of content. Reticle locates it and marks it, right where it lives — on any app, any surface, from your exact point of view. A non-invasive AI layer between you and the machine: nothing leaves it, and nothing inside it is touched.</p>
       <figure class="demo">
-        <video controls preload="none" playsinline width="800" height="520"
-               poster="https://gist.githubusercontent.com/NivDvir/adb530c3b070687a6c80aa9c9ee6d079/raw/reticle_reader_demo_thumb.jpg">
-          <source src="/reticle_demo_yc_2026-07.mp4" type="video/mp4">
-          <img src="https://gist.githubusercontent.com/NivDvir/adb530c3b070687a6c80aa9c9ee6d079/raw/reticle_reader_demo_small.gif" alt="Reticle running on macOS: it finds and marks named content on a live page, on-device." loading="lazy" width="800" height="520">
+        <video controls preload="none" playsinline width="800" height="450"
+               poster="/reticle_acetate_poster.jpg"
+               aria-label="Reticle in one minute: a pane of glass over a laptop screen; a marker finds and marks what matters on the page underneath.">
+          <source src="/reticle_acetate_film.mp4" type="video/mp4">
+          <img src="/reticle_acetate_poster.jpg" alt="A pane of glass over a laptop screen; a marker has drawn a box around a paragraph on the page underneath." loading="lazy" width="800" height="450">
         </video>
-        <figcaption>On-device grounding on macOS — finds and marks named content across a live web page and a native app. Press play.</figcaption>
+        <figcaption>Reticle in one minute — a pane of glass over your screen that finds and marks what matters, and never touches what's underneath. Press play, sound on.</figcaption>
       </figure>
     </header>
 
