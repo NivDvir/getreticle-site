@@ -12,8 +12,9 @@ and remote/VDI desktops.
 
 ## The site
 
-- [Reticle](https://getreticle.com/): what it is, what it reaches that others can't, and a one-minute film.
-- [Reticle in one minute](https://getreticle.com/reticle_acetate_film.mp4): the film on the home page — a pane of glass over the screen that finds and marks what matters, and never touches what's underneath.
+- [Reticle](https://getreticle.com/): what it is, what it reaches that others can't, and the co-driver film.
+- [Where Reticle is going](https://getreticle.com/reticle_codriver_film.mp4): the film on the home page (2½ min, concept animation) — a pair of eyes over the screen that sees what you see, thinks it through with you, and leaves the decision to you.
+- [Reticle in one minute](https://getreticle.com/reticle_acetate_film.mp4): the earlier film — a pane of glass over the screen that finds and marks what matters, and never touches what's underneath.
 - [Demo video](https://getreticle.com/reticle_demo_yc_2026-07.mp4): on-device grounding across a live web page and a native app.
 
 ## Engineering write-ups
