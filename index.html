@@ -84,6 +84,14 @@
 
     /* Hero */
     header.hero { padding: 72px 0 40px; }
+    header.hero { position: relative; }
+    .top-link {
+      position: absolute; top: 72px; right: 0;
+      font-size: 15px; font-weight: 600; line-height: 1.2;
+      color: var(--fg-soft); text-decoration: underline;
+      text-decoration-color: var(--accent); text-underline-offset: 3px;
+    }
+    .top-link:focus-visible { outline: 3px solid var(--fg-soft); outline-offset: 3px; border-radius: 3px; }
     .brand {
       display: inline-flex; align-items: center; gap: 10px;
       font-weight: 700; letter-spacing: -0.01em; font-size: 15px;
@@ -240,6 +248,7 @@
 
     <header class="hero">
       <div class="brand"><span class="dot"></span> Reticle</div>
+      <a class="top-link" href="/access/">Accessibility check</a>
       <h1>Finds and marks what you name, <span class="accent">on any screen.</span><br>On-device.</h1>
       <p class="lede">Name a control or a piece of content. Reticle locates it and marks it, right where it lives — on any app, any surface, from your exact point of view. A non-invasive AI layer between you and the machine: nothing leaves it, and nothing inside it is touched.</p>
       <figure class="demo">
