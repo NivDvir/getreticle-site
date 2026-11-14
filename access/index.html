@@ -30,6 +30,8 @@
       --accent: #e8552b;
       --link: #b93f17;
       --border: #e4e6eb;
+      --error: #b42318;
+      --ok: #146c2e;
     }
     @media (prefers-color-scheme: dark) {
       :root {
@@ -40,15 +42,19 @@
         --accent: #ff6a3d;
         --link: #ff6a3d;
         --border: #232830;
+        --error: #ff8a80;
+        --ok: #6fdc8c;
       }
     }
     :root[data-theme="light"] {
       --bg: #ffffff; --fg: #16181d; --fg-soft: #4a4f5a; --fg-faint: #6b7280;
       --accent: #e8552b; --link: #b93f17; --border: #e4e6eb;
+      --error: #b42318; --ok: #146c2e;
     }
     :root[data-theme="dark"] {
       --bg: #0d0f13; --fg: #f2f4f8; --fg-soft: #b6bcc8; --fg-faint: #858c9a;
       --accent: #ff6a3d; --link: #ff6a3d; --border: #232830;
+      --error: #ff8a80; --ok: #6fdc8c;
     }
 
     * { box-sizing: border-box; }
@@ -110,6 +116,30 @@
       font-size: 14px;
     }
     footer p { color: var(--fg-faint); margin: 0 0 8px; }
+
+    .contact-form { margin: 0 0 18px; }
+    .field { margin: 0 0 20px; }
+    .contact-form label { display: block; font-weight: 600; margin: 0 0 6px; color: var(--fg); }
+    .req { font-weight: 400; color: var(--fg-soft); }
+    .contact-form input, .contact-form textarea {
+      width: 100%; font: inherit; color: var(--fg); background: var(--bg);
+      border: 2px solid var(--fg-faint); border-radius: 6px; padding: 10px 12px;
+    }
+    .contact-form textarea { min-height: 160px; resize: vertical; }
+    .contact-form [aria-invalid="true"] { border-color: var(--error); }
+    .contact-form :focus-visible { outline: 3px solid var(--link); outline-offset: 3px; }
+    .err { color: var(--error); font-size: 15px; margin: 6px 0 0; font-weight: 600; }
+    .err:empty { display: none; }
+    .hint { font-size: 15px; margin: 6px 0 0; }
+    .contact-form button {
+      font: inherit; font-weight: 700; padding: 12px 22px; border-radius: 6px; cursor: pointer;
+      background: var(--fg); color: var(--bg); border: 2px solid var(--fg);
+    }
+    .contact-form button[disabled] { cursor: progress; }
+    .status { margin: 20px 0 0; font-weight: 600; min-height: 1.6em; }
+    .status.is-error { color: var(--error); }
+    .status.is-ok { color: var(--ok); }
+    .hp { position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; }
   </style>
 </head>
 <body>
@@ -137,6 +167,44 @@
         <p>Als Bericht im Browser und als PDF.</p>
 
         <h2 class="sub">Kontakt</h2>
+        <div class="contact-form" id="kontakt">
+          <form data-lang="de" action="https://api.getreticle.com/api/contact" method="post" novalidate aria-label="Kontaktformular">
+            <input type="hidden" name="lang" value="de">
+
+            <div class="field">
+              <label for="f-de-name">Name <span class="req">(Pflichtfeld)</span></label>
+              <input id="f-de-name" name="name" type="text" autocomplete="name" maxlength="120" required aria-describedby="e-de-name">
+              <p class="err" id="e-de-name"></p>
+            </div>
+
+            <div class="field">
+              <label for="f-de-email">E-Mail <span class="req">(Pflichtfeld)</span></label>
+              <input id="f-de-email" name="email" type="email" autocomplete="email" maxlength="200" required aria-describedby="e-de-email">
+              <p class="err" id="e-de-email"></p>
+            </div>
+
+            <div class="field">
+              <label for="f-de-company">Firma <span class="req">(optional)</span></label>
+              <input id="f-de-company" name="company" type="text" autocomplete="organization" maxlength="200" aria-describedby="e-de-company">
+              <p class="err" id="e-de-company"></p>
+            </div>
+
+            <div class="field">
+              <label for="f-de-message">Nachricht <span class="req">(Pflichtfeld)</span></label>
+              <textarea id="f-de-message" name="message" maxlength="4000" required aria-describedby="h-de-message e-de-message"></textarea>
+              <p class="hint" id="h-de-message">Höchstens 4000 Zeichen.</p>
+              <p class="err" id="e-de-message"></p>
+            </div>
+
+            <div class="hp" aria-hidden="true">
+              <label for="f-de-website">Website</label>
+              <input id="f-de-website" name="website" type="text" tabindex="-1" autocomplete="off">
+            </div>
+
+            <button type="submit">Senden</button>
+            <p class="status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
         <p><a href="mailto:niv@getreticle.com">niv@getreticle.com</a></p>
       </section>
 
@@ -157,15 +225,155 @@
         <p>As a report in the browser and as a PDF.</p>
 
         <h3 class="sub">Contact</h3>
+        <div class="contact-form" id="contact">
+          <form data-lang="en" action="https://api.getreticle.com/api/contact" method="post" novalidate aria-label="Contact form">
+            <input type="hidden" name="lang" value="en">
+
+            <div class="field">
+              <label for="f-en-name">Name <span class="req">(required)</span></label>
+              <input id="f-en-name" name="name" type="text" autocomplete="name" maxlength="120" required aria-describedby="e-en-name">
+              <p class="err" id="e-en-name"></p>
+            </div>
+
+            <div class="field">
+              <label for="f-en-email">Email <span class="req">(required)</span></label>
+              <input id="f-en-email" name="email" type="email" autocomplete="email" maxlength="200" required aria-describedby="e-en-email">
+              <p class="err" id="e-en-email"></p>
+            </div>
+
+            <div class="field">
+              <label for="f-en-company">Company <span class="req">(optional)</span></label>
+              <input id="f-en-company" name="company" type="text" autocomplete="organization" maxlength="200" aria-describedby="e-en-company">
+              <p class="err" id="e-en-company"></p>
+            </div>
+
+            <div class="field">
+              <label for="f-en-message">Message <span class="req">(required)</span></label>
+              <textarea id="f-en-message" name="message" maxlength="4000" required aria-describedby="h-en-message e-en-message"></textarea>
+              <p class="hint" id="h-en-message">At most 4000 characters.</p>
+              <p class="err" id="e-en-message"></p>
+            </div>
+
+            <div class="hp" aria-hidden="true">
+              <label for="f-en-website">Website</label>
+              <input id="f-en-website" name="website" type="text" tabindex="-1" autocomplete="off">
+            </div>
+
+            <button type="submit">Send</button>
+            <p class="status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
         <p><a href="mailto:niv@getreticle.com">niv@getreticle.com</a></p>
       </section>
     </main>
 
     <footer>
       <p><a href="/">getreticle.com</a></p>
-      <p id="impressum-placeholder">Impressum: TODO</p>
+      <p><a href="/impressum/">Impressum</a> &middot; <a href="/datenschutz/">Datenschutz</a></p>
     </footer>
 
   </div>
+  <script>
+    (function () {
+      const T = {
+        de: {
+          send: "Senden", sending: "Wird gesendet …",
+          ok: "Danke. Ihre Nachricht ist angekommen.",
+          failed: "Bitte prüfen Sie die markierten Felder.",
+          errors: {
+            name_required: "Bitte geben Sie Ihren Namen ein.",
+            name_too_long: "Der Name ist zu lang (höchstens 120 Zeichen).",
+            email_required: "Bitte geben Sie Ihre E-Mail-Adresse ein.",
+            email_invalid: "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+            email_too_long: "Die E-Mail-Adresse ist zu lang (höchstens 200 Zeichen).",
+            company_too_long: "Der Firmenname ist zu lang (höchstens 200 Zeichen).",
+            message_required: "Bitte schreiben Sie eine Nachricht.",
+            message_too_long: "Die Nachricht ist zu lang (höchstens 4000 Zeichen).",
+            rate_limited: "Zu viele Nachrichten in kurzer Zeit. Bitte versuchen Sie es später erneut.",
+            generic: "Die Nachricht konnte nicht gesendet werden. Bitte schreiben Sie an niv@getreticle.com."
+          }
+        },
+        en: {
+          send: "Send", sending: "Sending …",
+          ok: "Thank you. Your message has arrived.",
+          failed: "Please check the marked fields.",
+          errors: {
+            name_required: "Please enter your name.",
+            name_too_long: "The name is too long (at most 120 characters).",
+            email_required: "Please enter your email address.",
+            email_invalid: "Please enter a valid email address.",
+            email_too_long: "The email address is too long (at most 200 characters).",
+            company_too_long: "The company name is too long (at most 200 characters).",
+            message_required: "Please write a message.",
+            message_too_long: "The message is too long (at most 4000 characters).",
+            rate_limited: "Too many messages in a short time. Please try again later.",
+            generic: "The message could not be sent. Please write to niv@getreticle.com."
+          }
+        }
+      };
+      const FIELDS = ["name", "email", "company", "message"];
+
+      function localCheck(d) {
+        const len = (s) => [...s].length;
+        if (!d.name) return "name_required";
+        if (len(d.name) > 120) return "name_too_long";
+        if (!d.email) return "email_required";
+        if (len(d.email) > 200) return "email_too_long";
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@.]{2,}$/.test(d.email)) return "email_invalid";
+        if (len(d.company) > 200) return "company_too_long";
+        if (!d.message) return "message_required";
+        if (len(d.message) > 4000) return "message_too_long";
+        return null;
+      }
+
+      document.querySelectorAll("form[data-lang]").forEach((form) => {
+        const lang = form.dataset.lang;
+        const t = T[lang];
+        const status = form.querySelector(".status");
+        const btn = form.querySelector('button[type="submit"]');
+        const el = (kind, f) => document.getElementById(kind + "-" + lang + "-" + f);
+
+        function clearErrors() {
+          FIELDS.forEach((f) => { el("e", f).textContent = ""; el("f", f).removeAttribute("aria-invalid"); });
+          status.textContent = ""; status.className = "status";
+        }
+        function showFieldError(code) {
+          const f = String(code).split("_")[0];
+          if (!FIELDS.includes(f)) return false;
+          el("e", f).textContent = t.errors[code] || t.errors.generic;
+          el("f", f).setAttribute("aria-invalid", "true");
+          el("f", f).focus();
+          return true;
+        }
+        function fail(text) { status.className = "status is-error"; status.textContent = text; }
+
+        form.addEventListener("submit", async (ev) => {
+          ev.preventDefault();
+          clearErrors();
+          const data = Object.fromEntries([...new FormData(form)].map(([k, v]) => [k, String(v).trim()]));
+          const local = localCheck(data);
+          if (local) { showFieldError(local); fail(t.failed); return; }
+
+          btn.disabled = true; btn.textContent = t.sending;
+          try {
+            const res = await fetch(form.action, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
+            const body = await res.json().catch(() => ({ ok: false, error: "generic" }));
+            if (body.ok) {
+              form.reset();
+              status.className = "status is-ok"; status.textContent = t.ok;
+            } else if (showFieldError(body.error)) {
+              fail(t.failed);
+            } else {
+              fail(t.errors[body.error] || t.errors.generic);
+            }
+          } catch {
+            fail(t.errors.generic);
+          } finally {
+            btn.disabled = false; btn.textContent = t.send;
+          }
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
