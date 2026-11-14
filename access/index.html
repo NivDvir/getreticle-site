@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0d0f13" media="(prefers-color-scheme: dark)">
+  <link rel="canonical" href="https://getreticle.com/access/">
+  <link rel="alternate" hreflang="de" href="https://getreticle.com/access/">
+  <link rel="alternate" hreflang="en" href="https://getreticle.com/access/">
+  <link rel="alternate" hreflang="x-default" href="https://getreticle.com/access/">
+  <title>Barrierefreiheit prüfen: Textkontrast und automatische Prüfungen</title>
+  <meta name="description" content="Ich entwickle eine Engine, die Barrierefreiheitsprobleme auf Websites und Webanwendungen findet und markiert und dabei sowohl den gerenderten Bildschirm als auch die Struktur der Seite liest.">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Reticle">
+  <meta property="og:url" content="https://getreticle.com/access/">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:locale:alternate" content="en_US">
+  <meta property="og:title" content="Barrierefreiheit prüfen: Textkontrast und automatische Prüfungen">
+  <meta property="og:description" content="Ich entwickle eine Engine, die Barrierefreiheitsprobleme auf Websites und Webanwendungen findet und markiert und dabei sowohl den gerenderten Bildschirm als auch die Struktur der Seite liest.">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Ccircle%20cx='16'%20cy='16'%20r='11'%20fill='none'%20stroke='%23e8552b'%20stroke-width='3'/%3E%3Ccircle%20cx='16'%20cy='16'%20r='4.5'%20fill='%23e8552b'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #16181d;
+      --fg-soft: #4a4f5a;
+      --fg-faint: #6b7280;
+      --accent: #e8552b;
+      --link: #b93f17;
+      --border: #e4e6eb;
+      --error: #b42318;
+      --ok: #146c2e;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0d0f13;
+        --fg: #f2f4f8;
+        --fg-soft: #b6bcc8;
+        --fg-faint: #858c9a;
+        --accent: #ff6a3d;
+        --link: #ff6a3d;
+        --border: #232830;
+        --error: #ff8a80;
+        --ok: #6fdc8c;
+      }
+    }
+    :root[data-theme="light"] {
+      --bg: #ffffff; --fg: #16181d; --fg-soft: #4a4f5a; --fg-faint: #6b7280;
+      --accent: #e8552b; --link: #b93f17; --border: #e4e6eb;
+      --error: #b42318; --ok: #146c2e;
+    }
+    :root[data-theme="dark"] {
+      --bg: #0d0f13; --fg: #f2f4f8; --fg-soft: #b6bcc8; --fg-faint: #858c9a;
+      --accent: #ff6a3d; --link: #ff6a3d; --border: #232830;
+      --error: #ff8a80; --ok: #6fdc8c;
+    }
+
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      font-size: 17px;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
+    a:focus-visible { outline: 3px solid var(--link); outline-offset: 3px; border-radius: 3px; }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+
+    header.top { padding: 56px 0 8px; }
+    .brand {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-weight: 700; letter-spacing: -0.01em; font-size: 15px;
+      color: var(--fg-faint); text-transform: uppercase;
+    }
+    .brand .dot {
+      width: 12px; height: 12px; border-radius: 50%;
+      border: 2.5px solid var(--accent);
+      position: relative;
+    }
+    .brand .dot::after {
+      content: ""; position: absolute; inset: 2.5px;
+      border-radius: 50%; background: var(--accent);
+    }
+
+    section { padding: 40px 0; border-top: 1px solid var(--border); }
+    section:first-of-type { border-top: none; }
+    .title {
+      font-size: clamp(28px, 5.5vw, 40px);
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+      margin: 0 0 22px;
+      font-weight: 800;
+      color: var(--fg);
+    }
+    .sub {
+      font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--fg-faint); margin: 32px 0 12px; font-weight: 700;
+    }
+    p { margin: 0 0 18px; color: var(--fg-soft); }
+    .lede { font-size: clamp(17px, 2.4vw, 20px); color: var(--fg-soft); }
+    ul { margin: 0 0 18px; padding-left: 1.2em; color: var(--fg-soft); }
+    li { margin: 0 0 8px; }
+    li::marker { color: var(--fg-faint); }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 0 48px;
+      text-align: center;
+      color: var(--fg-faint);
+      font-size: 14px;
+    }
+    footer p { color: var(--fg-faint); margin: 0 0 8px; }
+
+    .contact-form { margin: 0 0 18px; }
+    .field { margin: 0 0 20px; }
+    .contact-form label { display: block; font-weight: 600; margin: 0 0 6px; color: var(--fg); }
+    .req { font-weight: 400; color: var(--fg-soft); }
+    .contact-form input, .contact-form textarea {
+      width: 100%; font: inherit; color: var(--fg); background: var(--bg);
+      border: 2px solid var(--fg-faint); border-radius: 6px; padding: 10px 12px;
+    }
+    .contact-form textarea { min-height: 160px; resize: vertical; }
+    .contact-form [aria-invalid="true"] { border-color: var(--error); }
+    .contact-form :focus-visible { outline: 3px solid var(--link); outline-offset: 3px; }
+    .err { color: var(--error); font-size: 15px; margin: 6px 0 0; font-weight: 600; }
+    .err:empty { display: none; }
+    .hint { font-size: 15px; margin: 6px 0 0; }
+    .contact-form button {
+      font: inherit; font-weight: 700; padding: 12px 22px; border-radius: 6px; cursor: pointer;
+      background: var(--fg); color: var(--bg); border: 2px solid var(--fg);
+    }
+    .contact-form button[disabled] { cursor: progress; }
+    .status { margin: 20px 0 0; font-weight: 600; min-height: 1.6em; }
+    .status.is-error { color: var(--error); }
+    .status.is-ok { color: var(--ok); }
+    .hp { position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header class="top">
+      <div class="brand"><span class="dot" aria-hidden="true"></span> Reticle</div>
+    </header>
+
+    <main>
+      <section id="de" lang="de">
+        <h1 class="title">Barrierefreiheit prüfen: Textkontrast und automatische Prüfungen</h1>
+        <p class="lede">Ich entwickle eine Engine, die Barrierefreiheitsprobleme auf Websites und Webanwendungen findet und markiert und dabei sowohl den gerenderten Bildschirm als auch die Struktur der Seite liest.</p>
+        <p>Das geschieht automatisiert und KI-gestützt, ohne Einbau in Ihre Website, wo nötig mit Handprüfung.</p>
+
+        <h2 class="sub">Was der Bericht enthält</h2>
+        <ul>
+          <li>Der Dienst misst Textkontraste im ersten Bildschirm geprüfter Seiten. Er findet nicht alles.</li>
+          <li>Text über Bildern, Verläufen oder Überlagerungen wird als „Nicht messbar“ ausgewiesen, nicht bewertet.</li>
+          <li>Dazu automatisierte Prüfungen der Seitenstruktur.</li>
+          <li>Jeder Befund ist im Bildschirmbild markiert. Der Bericht ist keine Konformitätserklärung.</li>
+        </ul>
+
+        <h2 class="sub">Lieferung</h2>
+        <p>Als Bericht im Browser und als PDF.</p>
+
+        <h2 class="sub">Kontakt</h2>
+        <div class="contact-form" id="kontakt">
+          <form data-lang="de" action="https://api.getreticle.com/api/contact" method="post" novalidate aria-label="Kontaktformular">
+            <input type="hidden" name="lang" value="de">
+
+            <div class="field">
+              <label for="f-de-name">Name <span class="req">(Pflichtfeld)</span></label>
+              <input id="f-de-name" name="name" type="text" autocomplete="name" maxlength="120" required aria-describedby="e-de-name">
+              <p class="err" id="e-de-name"></p>
+            </div>
+
+            <div class="field">
+              <label for="f-de-email">E-Mail <span class="req">(Pflichtfeld)</span></label>
+              <input id="f-de-email" name="email" type="email" autocomplete="email" maxlength="200" required aria-describedby="e-de-email">
+              <p class="err" id="e-de-email"></p>
+            </div>
+
+            <div class="field">
+              <label for="f-de-company">Firma <span class="req">(optional)</span></label>
+              <input id="f-de-company" name="company" type="text" autocomplete="organization" maxlength="200" aria-describedby="e-de-company">
+              <p class="err" id="e-de-company"></p>
+            </div>
+
+            <div class="field">
+              <label for="f-de-message">Nachricht <span class="req">(Pflichtfeld)</span></label>
+              <textarea id="f-de-message" name="message" maxlength="4000" required aria-describedby="h-de-message e-de-message"></textarea>
+              <p class="hint" id="h-de-message">Höchstens 4000 Zeichen.</p>
+              <p class="err" id="e-de-message"></p>
+            </div>
+
+            <div class="hp" aria-hidden="true">
+              <label for="f-de-website">Website</label>
+              <input id="f-de-website" name="website" type="text" tabindex="-1" autocomplete="off">
+            </div>
+
+            <button type="submit">Senden</button>
+            <p class="status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+        <p><a href="mailto:niv@getreticle.com">niv@getreticle.com</a></p>
+      </section>
+
+      <section id="en" lang="en">
+        <h2 class="title">Accessibility check: text contrast and automated checks</h2>
+        <p class="lede">I build an engine that finds and marks accessibility problems on websites and web applications, reading both the rendered screen and the page's structure.</p>
+        <p>It is automated and AI-supported, with nothing to install on your website, and with a manual check where needed.</p>
+
+        <h3 class="sub">What the report contains</h3>
+        <ul>
+          <li>The service measures text contrast on the first screen of the pages checked. It does not find everything.</li>
+          <li>Text over images, gradients or overlays is shown as "Not measurable", not rated.</li>
+          <li>Plus automated checks of the page structure.</li>
+          <li>Every finding is marked on the screenshot. The report is not a conformity statement.</li>
+        </ul>
+
+        <h3 class="sub">Delivery</h3>
+        <p>As a report in the browser and as a PDF.</p>
+
+        <h3 class="sub">Contact</h3>
+        <div class="contact-form" id="contact">
+          <form data-lang="en" action="https://api.getreticle.com/api/contact" method="post" novalidate aria-label="Contact form">
+            <input type="hidden" name="lang" value="en">
+
+            <div class="field">
+              <label for="f-en-name">Name <span class="req">(required)</span></label>
+              <input id="f-en-name" name="name" type="text" autocomplete="name" maxlength="120" required aria-describedby="e-en-name">
+              <p class="err" id="e-en-name"></p>
+            </div>
+
+            <div class="field">
+              <label for="f-en-email">Email <span class="req">(required)</span></label>
+              <input id="f-en-email" name="email" type="email" autocomplete="email" maxlength="200" required aria-describedby="e-en-email">
+              <p class="err" id="e-en-email"></p>
+            </div>
+
+            <div class="field">
+              <label for="f-en-company">Company <span class="req">(optional)</span></label>
+              <input id="f-en-company" name="company" type="text" autocomplete="organization" maxlength="200" aria-describedby="e-en-company">
+              <p class="err" id="e-en-company"></p>
+            </div>
+
+            <div class="field">
+              <label for="f-en-message">Message <span class="req">(required)</span></label>
+              <textarea id="f-en-message" name="message" maxlength="4000" required aria-describedby="h-en-message e-en-message"></textarea>
+              <p class="hint" id="h-en-message">At most 4000 characters.</p>
+              <p class="err" id="e-en-message"></p>
+            </div>
+
+            <div class="hp" aria-hidden="true">
+              <label for="f-en-website">Website</label>
+              <input id="f-en-website" name="website" type="text" tabindex="-1" autocomplete="off">
+            </div>
+
+            <button type="submit">Send</button>
+            <p class="status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+        <p><a href="mailto:niv@getreticle.com">niv@getreticle.com</a></p>
+      </section>
+    </main>
+
+    <footer>
+      <p><a href="/">getreticle.com</a></p>
+      <p><a href="/impressum/">Impressum</a> &middot; <a href="/datenschutz/">Datenschutz</a></p>
+    </footer>
+
+  </div>
+  <script>
+    (function () {
+      const T = {
+        de: {
+          send: "Senden", sending: "Wird gesendet …",
+          ok: "Danke. Ihre Nachricht ist angekommen.",
+          failed: "Bitte prüfen Sie die markierten Felder.",
+          errors: {
+            name_required: "Bitte geben Sie Ihren Namen ein.",
+            name_too_long: "Der Name ist zu lang (höchstens 120 Zeichen).",
+            email_required: "Bitte geben Sie Ihre E-Mail-Adresse ein.",
+            email_invalid: "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+            email_too_long: "Die E-Mail-Adresse ist zu lang (höchstens 200 Zeichen).",
+            company_too_long: "Der Firmenname ist zu lang (höchstens 200 Zeichen).",
+            message_required: "Bitte schreiben Sie eine Nachricht.",
+            message_too_long: "Die Nachricht ist zu lang (höchstens 4000 Zeichen).",
+            rate_limited: "Zu viele Nachrichten in kurzer Zeit. Bitte versuchen Sie es später erneut.",
+            generic: "Die Nachricht konnte nicht gesendet werden. Bitte schreiben Sie an niv@getreticle.com."
+          }
+        },
+        en: {
+          send: "Send", sending: "Sending …",
+          ok: "Thank you. Your message has arrived.",
+          failed: "Please check the marked fields.",
+          errors: {
+            name_required: "Please enter your name.",
+            name_too_long: "The name is too long (at most 120 characters).",
+            email_required: "Please enter your email address.",
+            email_invalid: "Please enter a valid email address.",
+            email_too_long: "The email address is too long (at most 200 characters).",
+            company_too_long: "The company name is too long (at most 200 characters).",
+            message_required: "Please write a message.",
+            message_too_long: "The message is too long (at most 4000 characters).",
+            rate_limited: "Too many messages in a short time. Please try again later.",
+            generic: "The message could not be sent. Please write to niv@getreticle.com."
+          }
+        }
+      };
+      const FIELDS = ["name", "email", "company", "message"];
+
+      function localCheck(d) {
+        const len = (s) => [...s].length;
+        if (!d.name) return "name_required";
+        if (len(d.name) > 120) return "name_too_long";
+        if (!d.email) return "email_required";
+        if (len(d.email) > 200) return "email_too_long";
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@.]{2,}$/.test(d.email)) return "email_invalid";
+        if (len(d.company) > 200) return "company_too_long";
+        if (!d.message) return "message_required";
+        if (len(d.message) > 4000) return "message_too_long";
+        return null;
+      }
+
+      document.querySelectorAll("form[data-lang]").forEach((form) => {
+        const lang = form.dataset.lang;
+        const t = T[lang];
+        const status = form.querySelector(".status");
+        const btn = form.querySelector('button[type="submit"]');
+        const el = (kind, f) => document.getElementById(kind + "-" + lang + "-" + f);
+
+        function clearErrors() {
+          FIELDS.forEach((f) => { el("e", f).textContent = ""; el("f", f).removeAttribute("aria-invalid"); });
+          status.textContent = ""; status.className = "status";
+        }
+        function showFieldError(code) {
+          const f = String(code).split("_")[0];
+          if (!FIELDS.includes(f)) return false;
+          el("e", f).textContent = t.errors[code] || t.errors.generic;
+          el("f", f).setAttribute("aria-invalid", "true");
+          el("f", f).focus();
+          return true;
+        }
+        function fail(text) { status.className = "status is-error"; status.textContent = text; }
+
+        form.addEventListener("submit", async (ev) => {
+          ev.preventDefault();
+          clearErrors();
+          const data = Object.fromEntries([...new FormData(form)].map(([k, v]) => [k, String(v).trim()]));
+          const local = localCheck(data);
+          if (local) { showFieldError(local); fail(t.failed); return; }
+
+          btn.disabled = true; btn.textContent = t.sending;
+          try {
+            const res = await fetch(form.action, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
+            const body = await res.json().catch(() => ({ ok: false, error: "generic" }));
+            if (body.ok) {
+              form.reset();
+              status.className = "status is-ok"; status.textContent = t.ok;
+            } else if (showFieldError(body.error)) {
+              fail(t.failed);
+            } else {
+              fail(t.errors[body.error] || t.errors.generic);
+            }
+          } catch {
+            fail(t.errors.generic);
+          } finally {
+            btn.disabled = false; btn.textContent = t.send;
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
