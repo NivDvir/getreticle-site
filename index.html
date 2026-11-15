@@ -34,7 +34,7 @@
       --bg-soft: #f5f6f8;
       --fg: #16181d;
       --fg-soft: #4a4f5a;
-      --fg-faint: #6b7280;
+      --fg-faint: #5b6170;
       --accent: #e8552b;
       --link: #b93f17;
       --btn: #b93f17;
@@ -60,7 +60,7 @@
     }
     :root[data-theme="light"] {
       --bg: #ffffff; --bg-soft: #f5f6f8; --fg: #16181d; --fg-soft: #4a4f5a;
-      --fg-faint: #6b7280; --accent: #e8552b; --link: #b93f17; --accent-soft: rgba(232,85,43,.10);
+      --fg-faint: #5b6170; --accent: #e8552b; --link: #b93f17; --accent-soft: rgba(232,85,43,.10);
       --border: #e4e6eb; --card: #ffffff; --shadow: 0 1px 3px rgba(0,0,0,.06), 0 8px 30px rgba(0,0,0,.05);
     }
     :root[data-theme="dark"] {
@@ -80,7 +80,7 @@
       font-size: 17px;
       -webkit-font-smoothing: antialiased;
     }
-    a { color: var(--accent); text-decoration: none; }
+    a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline; }
     .wrap { max-width: 760px; margin: 0 auto; padding: 0 24px; }
     img { max-width: 100%; height: auto; display: block; }
@@ -192,7 +192,7 @@
     }
     .btn {
       display: inline-block;
-      background: var(--accent); color: #fff;
+      background: var(--btn); color: #fff;
       padding: 14px 30px; border-radius: 10px;
       font-weight: 700; font-size: 17px;
       letter-spacing: -0.01em;
@@ -285,6 +285,7 @@
       </figure>
     </header>
 
+    <main>
     <div class="band">
       <h2>Accessibility check: text contrast and automated checks</h2>
       <p>I build an engine that finds and marks accessibility problems on websites and web applications, reading both the rendered screen and the page's structure.</p>
@@ -322,6 +323,8 @@
       <p class="big">Worth 20 minutes?</p>
       <a class="btn" href="mailto:niv@getreticle.com?subject=Reticle%20%E2%80%94%2020%20minutes%3F">Email me</a>
     </div>
+
+    </main>
 
     <footer>
       &copy; 2026 Reticle &middot; Niv Dvir
