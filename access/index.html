@@ -87,12 +87,12 @@
       display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
     }
     .brand {
-      display: inline-flex; align-items: center; min-height: 48px;
+      display: inline-flex; align-items: center; min-height: 61px;
       line-height: 0; text-decoration: none;
     }
-    .brand svg { display: block; width: 148px; height: 48px; transform: translateY(2px); }
+    .brand svg { display: block; width: 190px; height: 61px; transform: translateY(3px); }
     .brand:focus-visible { outline: 3px solid var(--link); outline-offset: 3px; border-radius: 4px; }
-    @media (max-width: 360px) { .brand svg { width: 124px; height: 40px; } .brand { min-height: 44px; } }
+    @media (max-width: 399px) { .brand svg { width: 150px; height: 48px; transform: translateY(2px); } .brand { min-height: 48px; } }
     .lang { display: inline-flex; border: 2px solid var(--fg-faint); border-radius: 8px; overflow: hidden; }
     .lang button {
       font: inherit; font-size: 15px; font-weight: 600; min-height: 44px; min-width: 44px; padding: 0 14px;
@@ -174,10 +174,26 @@
     }
     footer p { color: var(--fg-faint); margin: 0 0 8px; }
     @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+    /* layer 3: thin flat acetate sheets, fine double hairline, near-square corners */
+    :root { --edge: rgba(61,68,77,.30); --inner-soft: rgba(255,255,255,.9); --inner-card: rgba(61,68,77,.10); --plate: #5a6068; --lift: 0 2px 4px rgba(16,21,28,.06); --s1: .55; --s2: .35; }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --edge: rgba(255,255,255,.22); --inner-soft: rgba(255,255,255,.10); --inner-card: rgba(255,255,255,.10); --s1: .05; --s2: .03; } }
+    :root[data-theme="dark"] { --edge: rgba(255,255,255,.22); --inner-soft: rgba(255,255,255,.10); --inner-card: rgba(255,255,255,.10); --s1: .05; --s2: .03; }
+    .hero { --pbg: var(--bg-soft); --inner: var(--inner-soft); }
+    ul.cards li { --pbg: var(--bg); --inner: var(--inner-card); }
+    .hero, ul.cards li { border: 1px solid var(--edge); border-radius: 5px; box-shadow: var(--lift), inset 0 0 0 1px var(--pbg), inset 0 0 0 2px var(--inner); }
+    .hero { background-image: linear-gradient(106deg, transparent 0 5%, rgba(255,255,255,var(--s1)) 5% 10%, transparent 10% 12%, rgba(255,255,255,var(--s2)) 12% 13.5%, transparent 13.5%); }
+    .btn, .btn-primary, .btn-secondary, .band .btn-primary, .top-link,
+    .contact-form input, .contact-form textarea, .contact-form select { border-radius: 4px; }
+    .lang { border: 1px solid var(--edge); border-radius: 4px; }
+    .lang button + button { border-left: 1px solid var(--edge); }
+    .lang button[aria-pressed="true"] { background: var(--plate); color: #fff; }
+    .lang button[aria-pressed="true"]:focus-visible { outline-color: #fff; }
+    .s-tag { fill: var(--plate); stroke: rgba(61,68,77,.5); stroke-width: 1; }
   </style>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><linearGradient id="rt-glass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7b8189" stop-opacity=".60"/><stop offset="1" stop-color="#5f656d" stop-opacity=".66"/></linearGradient><linearGradient id="rt-sheen" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".20"/><stop offset=".45" stop-color="#fff" stop-opacity=".03"/><stop offset="1" stop-color="#fff" stop-opacity=".10"/></linearGradient><filter id="rt-chalk" x="-6%" y="-30%" width="112%" height="160%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="2" seed="21" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.5" xChannelSelector="R" yChannelSelector="G" result="rough"/><feTurbulence type="fractalNoise" baseFrequency="0.35 0.9" numOctaves="2" seed="8" result="streak"/><feColorMatrix in="streak" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 -1.9 1.95" result="sA"/><feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="1" seed="2" result="grain"/><feColorMatrix in="grain" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 -3 2.75" result="gA"/><feComposite in="rough" in2="sA" operator="in" result="c1"/><feComposite in="c1" in2="gA" operator="in" result="core"/><feGaussianBlur in="rough" stdDeviation="1.6" result="d0"/><feColorMatrix in="d0" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .30 0" result="dust"/><feGaussianBlur in="rough" stdDeviation=".9" result="s0"/><feOffset in="s0" dy=".8" result="s1"/><feColorMatrix in="s1" type="matrix" values="0 0 0 0 .12  0 0 0 0 .18  0 0 0 0 .22  0 0 0 .5 0" result="shade"/><feMerge><feMergeNode in="shade"/><feMergeNode in="dust"/><feMergeNode in="core"/></feMerge></filter><filter id="rt-soft2" x="-20%" y="-60%" width="140%" height="260%"><feGaussianBlur stdDeviation="1.4"/></filter><symbol id="rt-logo" viewBox="0 0 260 84"><rect x="11.5" y="14" width="240" height="54" rx="3.5" fill="#10151c" opacity=".09" filter="url(#rt-soft2)"/><rect x="10" y="10" width="240" height="54" rx="3.5" fill="url(#rt-glass)"/><rect x="10" y="10" width="240" height="54" rx="3.5" fill="url(#rt-sheen)"/><clipPath id="rt-lc"><rect x="10" y="10" width="240" height="54" rx="3.5"/></clipPath><g clip-path="url(#rt-lc)" fill="#fff"><path d="M78 10h30l-31 54h-30z" opacity=".15"/><path d="M117 10h10l-31 54h-10z" opacity=".10"/></g><rect x="10.35" y="10.35" width="239.3" height="53.3" rx="3.2" fill="none" stroke="#3d444d" stroke-opacity=".42" stroke-width=".8"/><rect x="11.35" y="11.35" width="237.3" height="51.3" rx="2.3" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width=".45"/><g transform="translate(0 1.5)"><g filter="url(#rt-chalk)" fill="none" stroke="#fff" stroke-width="4.7" stroke-linecap="round" stroke-linejoin="round"><path transform="translate(43.2 -0.4) rotate(-1.0 7.5 37)" d="M0 50.3 L0.6 24.2 M0.4 24.6 C9.5 23 15.4 25.6 14.8 31 C14.2 36.6 7.6 37.9 0.8 37.2 M6.4 37.6 L15.4 50.4"/><path transform="translate(71.4 -0.1) rotate(-0.8 7.2 37)" d="M14.2 24.7 L0.5 24.1 L0 50.2 L14.6 49.6 M0.4 37.2 L11.2 36.6"/><path transform="translate(99.1 -0.6) rotate(-0.2 9.0 37)" d="M-0.6 24.8 L17.6 24 M8.3 24.3 L8.8 50.4"/><path transform="translate(130.2 0.6) rotate(0.7 0.8 37)" d="M0.9 23.9 L0.3 50.3"/><path transform="translate(144.9 0.4) rotate(-0.7 8.5 37)" d="M16.2 28.6 C12 22.6 1.6 22.8 0.6 36.4 C-0.4 49 10.4 53.4 16.8 45.8"/><path transform="translate(175.1 0.1) rotate(-0.5 7.0 37)" d="M0.7 24 L0 49.9 L13.8 49.4"/><path transform="translate(202.3 -0.5) rotate(-0.9 7.2 37)" d="M14.2 24.7 L0.5 24.1 L0 50.2 L14.6 49.6 M0.4 37.2 L11.2 36.6"/></g></g></symbol><symbol id="rt-tile" viewBox="0 0 64 64"><rect x="9.2" y="11" width="46" height="44" rx="3.5" fill="#10151c" opacity=".09" filter="url(#rt-soft2)"/><rect x="8" y="8" width="46" height="44" rx="3.5" fill="url(#rt-glass)"/><rect x="8" y="8" width="46" height="44" rx="3.5" fill="url(#rt-sheen)"/><clipPath id="rt-tc"><rect x="8" y="8" width="46" height="44" rx="3.5"/></clipPath><g clip-path="url(#rt-tc)" fill="#fff"><path d="M24 8h10L9 52H-1z" opacity=".15"/><path d="M38 8h4L17 52h-4z" opacity=".10"/></g><rect x="8.35" y="8.35" width="45.3" height="43.3" rx="3.2" fill="none" stroke="#3d444d" stroke-opacity=".42" stroke-width=".8"/><rect x="9.35" y="9.35" width="43.3" height="41.3" rx="2.3" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width=".45"/></symbol></defs></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><linearGradient id="rt-glass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7b8189" stop-opacity=".60"/><stop offset="1" stop-color="#5f656d" stop-opacity=".66"/></linearGradient><linearGradient id="rt-sheen" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".20"/><stop offset=".45" stop-color="#fff" stop-opacity=".03"/><stop offset="1" stop-color="#fff" stop-opacity=".10"/></linearGradient><filter id="rt-chalk" x="-6%" y="-30%" width="112%" height="160%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="2" seed="21" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.5" xChannelSelector="R" yChannelSelector="G" result="rough"/><feTurbulence type="fractalNoise" baseFrequency="0.35 0.9" numOctaves="2" seed="8" result="streak"/><feColorMatrix in="streak" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 -1.9 1.95" result="sA"/><feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="1" seed="2" result="grain"/><feColorMatrix in="grain" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 -3 2.75" result="gA"/><feComposite in="rough" in2="sA" operator="in" result="c1"/><feComposite in="c1" in2="gA" operator="in" result="core"/><feGaussianBlur in="rough" stdDeviation="1.6" result="d0"/><feColorMatrix in="d0" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .30 0" result="dust"/><feGaussianBlur in="rough" stdDeviation=".9" result="s0"/><feOffset in="s0" dy=".8" result="s1"/><feColorMatrix in="s1" type="matrix" values="0 0 0 0 .12  0 0 0 0 .18  0 0 0 0 .22  0 0 0 .5 0" result="shade"/><feMerge><feMergeNode in="shade"/><feMergeNode in="dust"/><feMergeNode in="core"/></feMerge></filter><filter id="rt-soft2" x="-20%" y="-60%" width="140%" height="260%"><feGaussianBlur stdDeviation="1.4"/></filter><symbol id="rt-logo" viewBox="0 0 260 84"><rect x="11.5" y="14" width="240" height="54" rx="3.5" fill="#10151c" opacity=".09" filter="url(#rt-soft2)"/><rect x="10" y="10" width="240" height="54" rx="3.5" fill="url(#rt-glass)"/><rect x="10" y="10" width="240" height="54" rx="3.5" fill="url(#rt-sheen)"/><clipPath id="rt-lc"><rect x="10" y="10" width="240" height="54" rx="3.5"/></clipPath><g clip-path="url(#rt-lc)" fill="#fff"><path d="M38 10h15l-16 54h-15z" opacity=".26"/><path d="M60 10h5l-16 54h-5z" opacity=".18"/></g><rect x="10.35" y="10.35" width="239.3" height="53.3" rx="3.2" fill="none" stroke="#3d444d" stroke-opacity=".42" stroke-width=".8"/><rect x="11.35" y="11.35" width="237.3" height="51.3" rx="2.3" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width=".45"/><g transform="translate(0 1.5)"><g filter="url(#rt-chalk)" fill="none" stroke="#fff" stroke-width="4.7" stroke-linecap="round" stroke-linejoin="round"><path transform="translate(43.2 -0.4) rotate(-1.0 7.5 37)" d="M0 50.3 L0.6 24.2 M0.4 24.6 C9.5 23 15.4 25.6 14.8 31 C14.2 36.6 7.6 37.9 0.8 37.2 M6.4 37.6 L15.4 50.4"/><path transform="translate(71.4 -0.1) rotate(-0.8 7.2 37)" d="M14.2 24.7 L0.5 24.1 L0 50.2 L14.6 49.6 M0.4 37.2 L11.2 36.6"/><path transform="translate(99.1 -0.6) rotate(-0.2 9.0 37)" d="M-0.6 24.8 L17.6 24 M8.3 24.3 L8.8 50.4"/><path transform="translate(130.2 0.6) rotate(0.7 0.8 37)" d="M0.9 23.9 L0.3 50.3"/><path transform="translate(144.9 0.4) rotate(-0.7 8.5 37)" d="M16.2 28.6 C12 22.6 1.6 22.8 0.6 36.4 C-0.4 49 10.4 53.4 16.8 45.8"/><path transform="translate(175.1 0.1) rotate(-0.5 7.0 37)" d="M0.7 24 L0 49.9 L13.8 49.4"/><path transform="translate(202.3 -0.5) rotate(-0.9 7.2 37)" d="M14.2 24.7 L0.5 24.1 L0 50.2 L14.6 49.6 M0.4 37.2 L11.2 36.6"/></g></g></symbol><symbol id="rt-tile" viewBox="0 0 64 64"><rect x="9.2" y="11" width="46" height="44" rx="3.5" fill="#10151c" opacity=".09" filter="url(#rt-soft2)"/><rect x="8" y="8" width="46" height="44" rx="3.5" fill="url(#rt-glass)"/><rect x="8" y="8" width="46" height="44" rx="3.5" fill="url(#rt-sheen)"/><clipPath id="rt-tc"><rect x="8" y="8" width="46" height="44" rx="3.5"/></clipPath><g clip-path="url(#rt-tc)" fill="#fff"><path d="M16 8h6L9 52H3z" opacity=".26"/><path d="M25 8h2.4L14.4 52H12z" opacity=".18"/></g><rect x="8.35" y="8.35" width="45.3" height="43.3" rx="3.2" fill="none" stroke="#3d444d" stroke-opacity=".42" stroke-width=".8"/><rect x="9.35" y="9.35" width="43.3" height="41.3" rx="2.3" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width=".45"/></symbol></defs></svg>
   <div class="wrap">
 
     <header class="top">
@@ -203,8 +219,8 @@
         <figure class="example">
           <svg viewBox="0 0 720 360" role="img" aria-label="Schematisches Beispiel: ein Bildschirmbild mit einem markierten Befund zum Textkontrast und einem als nicht messbar ausgewiesenen Text über einem Bild." xmlns="http://www.w3.org/2000/svg">
             <defs><linearGradient id="picK" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--g1)"/><stop offset="1" style="stop-color:var(--g2)"/></linearGradient></defs>
-            <rect class="s-win" x="10" y="10" width="700" height="340" rx="12"/>
-            <path class="s-bar" d="M10 50 V22 a12 12 0 0 1 12 -12 H698 a12 12 0 0 1 12 12 V50 Z"/>
+            <rect class="s-win" x="10" y="10" width="700" height="340" rx="5"/>
+            <path class="s-bar" d="M10 50 V15 a5 5 0 0 1 5 -5 H705 a5 5 0 0 1 5 5 V50 Z"/>
             <circle class="s-dot" cx="34" cy="30" r="5.5"/><circle class="s-dot" cx="54" cy="30" r="5.5"/><circle class="s-dot" cx="74" cy="30" r="5.5"/>
             <rect class="s-pill" x="104" y="19" width="360" height="22" rx="11"/>
             <rect class="s-line" x="34" y="78" width="300" height="10" rx="5"/>
@@ -213,7 +229,7 @@
             <rect class="s-find" x="34" y="178" width="320" height="72" rx="10"/>
             <rect class="s-light" x="52" y="200" width="270" height="9" rx="4.5"/>
             <rect class="s-light" x="52" y="222" width="190" height="9" rx="4.5"/>
-            <rect class="s-tag" x="44" y="161" width="190" height="34" rx="8"/>
+            <rect class="s-tag" x="44" y="161" width="190" height="34" rx="2"/>
             <text class="s-tagtxt" x="139" y="184">Kontrast 2,9:1</text>
             <rect class="s-line" x="34" y="278" width="290" height="10" rx="5"/>
             <rect class="s-line" x="34" y="300" width="220" height="10" rx="5"/>
@@ -222,7 +238,7 @@
             <rect class="s-over" x="418" y="174" width="244" height="10" rx="5"/>
             <rect class="s-over" x="418" y="198" width="170" height="10" rx="5"/>
             <rect class="s-dash" x="384" y="80" width="312" height="250" rx="12"/>
-            <rect class="s-tag" x="404" y="63" width="190" height="34" rx="8"/>
+            <rect class="s-tag" x="404" y="63" width="190" height="34" rx="2"/>
             <text class="s-tagtxt" x="499" y="86">Nicht messbar</text>
           </svg>
           <figcaption>Beispiel, schematisch</figcaption>
@@ -266,8 +282,8 @@
         <figure class="example">
           <svg viewBox="0 0 720 360" role="img" aria-label="Schematic example: a screenshot with one marked text-contrast finding and one text over an image shown as not measurable." xmlns="http://www.w3.org/2000/svg">
             <defs><linearGradient id="picC" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--g1)"/><stop offset="1" style="stop-color:var(--g2)"/></linearGradient></defs>
-            <rect class="s-win" x="10" y="10" width="700" height="340" rx="12"/>
-            <path class="s-bar" d="M10 50 V22 a12 12 0 0 1 12 -12 H698 a12 12 0 0 1 12 12 V50 Z"/>
+            <rect class="s-win" x="10" y="10" width="700" height="340" rx="5"/>
+            <path class="s-bar" d="M10 50 V15 a5 5 0 0 1 5 -5 H705 a5 5 0 0 1 5 5 V50 Z"/>
             <circle class="s-dot" cx="34" cy="30" r="5.5"/><circle class="s-dot" cx="54" cy="30" r="5.5"/><circle class="s-dot" cx="74" cy="30" r="5.5"/>
             <rect class="s-pill" x="104" y="19" width="360" height="22" rx="11"/>
             <rect class="s-line" x="34" y="78" width="300" height="10" rx="5"/>
@@ -276,7 +292,7 @@
             <rect class="s-find" x="34" y="178" width="320" height="72" rx="10"/>
             <rect class="s-light" x="52" y="200" width="270" height="9" rx="4.5"/>
             <rect class="s-light" x="52" y="222" width="190" height="9" rx="4.5"/>
-            <rect class="s-tag" x="44" y="161" width="190" height="34" rx="8"/>
+            <rect class="s-tag" x="44" y="161" width="190" height="34" rx="2"/>
             <text class="s-tagtxt" x="139" y="184">Contrast 2.9:1</text>
             <rect class="s-line" x="34" y="278" width="290" height="10" rx="5"/>
             <rect class="s-line" x="34" y="300" width="220" height="10" rx="5"/>
@@ -285,7 +301,7 @@
             <rect class="s-over" x="418" y="174" width="244" height="10" rx="5"/>
             <rect class="s-over" x="418" y="198" width="170" height="10" rx="5"/>
             <rect class="s-dash" x="384" y="80" width="312" height="250" rx="12"/>
-            <rect class="s-tag" x="404" y="63" width="190" height="34" rx="8"/>
+            <rect class="s-tag" x="404" y="63" width="190" height="34" rx="2"/>
             <text class="s-tagtxt" x="499" y="86">Not measurable</text>
           </svg>
           <figcaption>Example, schematic</figcaption>
