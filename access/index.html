@@ -87,19 +87,12 @@
       display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
     }
     .brand {
-      display: inline-flex; align-items: center; gap: 10px; min-height: 44px;
-      font-weight: 700; letter-spacing: -0.01em; font-size: 15px;
-      color: var(--fg-faint); text-transform: uppercase; text-decoration: none;
+      display: inline-flex; align-items: center; min-height: 48px;
+      line-height: 0; text-decoration: none;
     }
-    .brand .dot {
-      width: 12px; height: 12px; border-radius: 50%;
-      border: 2.5px solid var(--accent);
-      position: relative;
-    }
-    .brand .dot::after {
-      content: ""; position: absolute; inset: 2.5px;
-      border-radius: 50%; background: var(--accent);
-    }
+    .brand svg { display: block; width: 148px; height: 48px; transform: translateY(2px); }
+    .brand:focus-visible { outline: 3px solid var(--link); outline-offset: 3px; border-radius: 4px; }
+    @media (max-width: 360px) { .brand svg { width: 124px; height: 40px; } .brand { min-height: 44px; } }
     .lang { display: inline-flex; border: 2px solid var(--fg-faint); border-radius: 8px; overflow: hidden; }
     .lang button {
       font: inherit; font-size: 15px; font-weight: 600; min-height: 44px; min-width: 44px; padding: 0 14px;
@@ -153,7 +146,7 @@
       margin: 0; padding: 18px; border: 1px solid var(--border); border-radius: 12px;
       background: var(--bg);
     }
-    ul.cards svg { display: block; width: 28px; height: 28px; margin: 0 0 12px; color: var(--accent); }
+    ul.cards svg { display: block; width: 56px; height: 56px; margin: -7px 0 2px -7px; }
     @media (max-width: 639px) { ul.cards { grid-template-columns: 1fr; } }
 
     figure.example { margin: 56px 0 0; }
@@ -184,10 +177,11 @@
   </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><linearGradient id="rt-glass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7b8189" stop-opacity=".60"/><stop offset="1" stop-color="#5f656d" stop-opacity=".66"/></linearGradient><linearGradient id="rt-sheen" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".20"/><stop offset=".45" stop-color="#fff" stop-opacity=".03"/><stop offset="1" stop-color="#fff" stop-opacity=".10"/></linearGradient><filter id="rt-chalk" x="-6%" y="-30%" width="112%" height="160%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="2" seed="21" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.5" xChannelSelector="R" yChannelSelector="G" result="rough"/><feTurbulence type="fractalNoise" baseFrequency="0.35 0.9" numOctaves="2" seed="8" result="streak"/><feColorMatrix in="streak" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 -1.9 1.95" result="sA"/><feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="1" seed="2" result="grain"/><feColorMatrix in="grain" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 -3 2.75" result="gA"/><feComposite in="rough" in2="sA" operator="in" result="c1"/><feComposite in="c1" in2="gA" operator="in" result="core"/><feGaussianBlur in="rough" stdDeviation="1.6" result="d0"/><feColorMatrix in="d0" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .30 0" result="dust"/><feGaussianBlur in="rough" stdDeviation=".9" result="s0"/><feOffset in="s0" dy=".8" result="s1"/><feColorMatrix in="s1" type="matrix" values="0 0 0 0 .12  0 0 0 0 .18  0 0 0 0 .22  0 0 0 .5 0" result="shade"/><feMerge><feMergeNode in="shade"/><feMergeNode in="dust"/><feMergeNode in="core"/></feMerge></filter><filter id="rt-soft2" x="-20%" y="-60%" width="140%" height="260%"><feGaussianBlur stdDeviation="1.4"/></filter><symbol id="rt-logo" viewBox="0 0 260 84"><rect x="11.5" y="14" width="240" height="54" rx="3.5" fill="#10151c" opacity=".09" filter="url(#rt-soft2)"/><rect x="10" y="10" width="240" height="54" rx="3.5" fill="url(#rt-glass)"/><rect x="10" y="10" width="240" height="54" rx="3.5" fill="url(#rt-sheen)"/><clipPath id="rt-lc"><rect x="10" y="10" width="240" height="54" rx="3.5"/></clipPath><g clip-path="url(#rt-lc)" fill="#fff"><path d="M78 10h30l-31 54h-30z" opacity=".15"/><path d="M117 10h10l-31 54h-10z" opacity=".10"/></g><rect x="10.35" y="10.35" width="239.3" height="53.3" rx="3.2" fill="none" stroke="#3d444d" stroke-opacity=".42" stroke-width=".8"/><rect x="11.35" y="11.35" width="237.3" height="51.3" rx="2.3" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width=".45"/><g transform="translate(0 1.5)"><g filter="url(#rt-chalk)" fill="none" stroke="#fff" stroke-width="4.7" stroke-linecap="round" stroke-linejoin="round"><path transform="translate(43.2 -0.4) rotate(-1.0 7.5 37)" d="M0 50.3 L0.6 24.2 M0.4 24.6 C9.5 23 15.4 25.6 14.8 31 C14.2 36.6 7.6 37.9 0.8 37.2 M6.4 37.6 L15.4 50.4"/><path transform="translate(71.4 -0.1) rotate(-0.8 7.2 37)" d="M14.2 24.7 L0.5 24.1 L0 50.2 L14.6 49.6 M0.4 37.2 L11.2 36.6"/><path transform="translate(99.1 -0.6) rotate(-0.2 9.0 37)" d="M-0.6 24.8 L17.6 24 M8.3 24.3 L8.8 50.4"/><path transform="translate(130.2 0.6) rotate(0.7 0.8 37)" d="M0.9 23.9 L0.3 50.3"/><path transform="translate(144.9 0.4) rotate(-0.7 8.5 37)" d="M16.2 28.6 C12 22.6 1.6 22.8 0.6 36.4 C-0.4 49 10.4 53.4 16.8 45.8"/><path transform="translate(175.1 0.1) rotate(-0.5 7.0 37)" d="M0.7 24 L0 49.9 L13.8 49.4"/><path transform="translate(202.3 -0.5) rotate(-0.9 7.2 37)" d="M14.2 24.7 L0.5 24.1 L0 50.2 L14.6 49.6 M0.4 37.2 L11.2 36.6"/></g></g></symbol><symbol id="rt-tile" viewBox="0 0 64 64"><rect x="9.2" y="11" width="46" height="44" rx="3.5" fill="#10151c" opacity=".09" filter="url(#rt-soft2)"/><rect x="8" y="8" width="46" height="44" rx="3.5" fill="url(#rt-glass)"/><rect x="8" y="8" width="46" height="44" rx="3.5" fill="url(#rt-sheen)"/><clipPath id="rt-tc"><rect x="8" y="8" width="46" height="44" rx="3.5"/></clipPath><g clip-path="url(#rt-tc)" fill="#fff"><path d="M24 8h10L9 52H-1z" opacity=".15"/><path d="M38 8h4L17 52h-4z" opacity=".10"/></g><rect x="8.35" y="8.35" width="45.3" height="43.3" rx="3.2" fill="none" stroke="#3d444d" stroke-opacity=".42" stroke-width=".8"/><rect x="9.35" y="9.35" width="43.3" height="41.3" rx="2.3" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width=".45"/></symbol></defs></svg>
   <div class="wrap">
 
     <header class="top">
-      <a class="brand" href="/" aria-label="Reticle"><span class="dot" aria-hidden="true"></span> Reticle</a>
+      <a class="brand" href="/" aria-label="Reticle"><svg viewBox="0 0 260 84" width="148" height="48" aria-hidden="true" focusable="false"><use href="#rt-logo"/></svg></a>
       <div class="lang" role="group" aria-label="Sprache" id="langgrp">
         <button type="button" data-lang="de" aria-pressed="true" hidden>Deutsch</button>
         <button type="button" data-lang="en" aria-pressed="false" hidden>English</button>
@@ -237,10 +231,10 @@
         <div class="block">
         <h2 class="sub">Was der Bericht enthält</h2>
         <ul class="cards">
-          <li><svg viewBox="0 0 28 28" aria-hidden="true" focusable="false"><circle cx="14" cy="14" r="11" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M14 3 a11 11 0 0 1 0 22 Z" fill="currentColor"/></svg>Der Dienst misst Textkontraste im ersten Bildschirm geprüfter Seiten. Er findet nicht alles.</li>
-          <li><svg viewBox="0 0 28 28" aria-hidden="true" focusable="false"><rect x="3" y="4" width="22" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="2.5"/><circle cx="10" cy="11" r="2.2" fill="currentColor"/><path d="M3 20 l7 -6 l5 4 l4 -3 l6 5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 26 L24 2" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>Text über Bildern, Verläufen oder Überlagerungen wird als „Nicht messbar“ ausgewiesen, nicht bewertet.</li>
-          <li><svg viewBox="0 0 28 28" aria-hidden="true" focusable="false"><rect x="3" y="3" width="22" height="22" rx="3" fill="none" stroke="currentColor" stroke-width="2.5"/><rect x="8" y="8" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2.5"/><rect x="12" y="12" width="4" height="4" fill="currentColor"/></svg>Dazu automatisierte Prüfungen der Seitenstruktur.</li>
-          <li><svg viewBox="0 0 28 28" aria-hidden="true" focusable="false"><rect x="3" y="6" width="22" height="16" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/><circle cx="14" cy="14" r="3.2" fill="currentColor"/></svg>Jeder Befund ist im Bildschirmbild markiert. Der Bericht ist keine Konformitätserklärung.</li>
+          <li><svg viewBox="0 0 64 64" width="56" height="56" aria-hidden="true" focusable="false"><use href="#rt-tile"/><g transform="translate(-1 0)" filter="url(#rt-chalk)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="30" r="10" stroke-width="3"/><path d="M32 20a10 10 0 0 1 0 20z" fill="#fff" stroke="none"/></g></svg>Der Dienst misst Textkontraste im ersten Bildschirm geprüfter Seiten. Er findet nicht alles.</li>
+          <li><svg viewBox="0 0 64 64" width="56" height="56" aria-hidden="true" focusable="false"><use href="#rt-tile"/><g transform="translate(-1 0)" filter="url(#rt-chalk)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><rect x="21" y="21" width="22" height="18" rx="2.5" stroke-width="3"/><path d="M24 35l6-7 4 4 3-3 4 5" stroke-width="2.7"/><path d="M19 43L45 17" stroke-width="3"/></g></svg>Text über Bildern, Verläufen oder Überlagerungen wird als „Nicht messbar“ ausgewiesen, nicht bewertet.</li>
+          <li><svg viewBox="0 0 64 64" width="56" height="56" aria-hidden="true" focusable="false"><use href="#rt-tile"/><g transform="translate(-1 0)" filter="url(#rt-chalk)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><rect x="21" y="19" width="22" height="22" rx="2.5" stroke-width="3"/><rect x="27" y="25" width="10" height="10" rx="1.5" stroke-width="2.7"/></g></svg>Dazu automatisierte Prüfungen der Seitenstruktur.</li>
+          <li><svg viewBox="0 0 64 64" width="56" height="56" aria-hidden="true" focusable="false"><use href="#rt-tile"/><g transform="translate(-1 0)" filter="url(#rt-chalk)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><rect x="20" y="22" width="24" height="16" rx="3.5" stroke-width="3"/><circle cx="32" cy="30" r="2.4" fill="#fff" stroke="none"/></g></svg>Jeder Befund ist im Bildschirmbild markiert. Der Bericht ist keine Konformitätserklärung.</li>
         </ul>
         </div>
 
@@ -300,10 +294,10 @@
         <div class="block">
         <h3 class="sub">What the report contains</h3>
         <ul class="cards">
-          <li><svg viewBox="0 0 28 28" aria-hidden="true" focusable="false"><circle cx="14" cy="14" r="11" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M14 3 a11 11 0 0 1 0 22 Z" fill="currentColor"/></svg>The service measures text contrast on the first screen of the pages checked. It does not find everything.</li>
-          <li><svg viewBox="0 0 28 28" aria-hidden="true" focusable="false"><rect x="3" y="4" width="22" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="2.5"/><circle cx="10" cy="11" r="2.2" fill="currentColor"/><path d="M3 20 l7 -6 l5 4 l4 -3 l6 5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 26 L24 2" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>Text over images, gradients or overlays is shown as "Not measurable", not rated.</li>
-          <li><svg viewBox="0 0 28 28" aria-hidden="true" focusable="false"><rect x="3" y="3" width="22" height="22" rx="3" fill="none" stroke="currentColor" stroke-width="2.5"/><rect x="8" y="8" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2.5"/><rect x="12" y="12" width="4" height="4" fill="currentColor"/></svg>Plus automated checks of the page structure.</li>
-          <li><svg viewBox="0 0 28 28" aria-hidden="true" focusable="false"><rect x="3" y="6" width="22" height="16" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/><circle cx="14" cy="14" r="3.2" fill="currentColor"/></svg>Every finding is marked on the screenshot. The report is not a conformity statement.</li>
+          <li><svg viewBox="0 0 64 64" width="56" height="56" aria-hidden="true" focusable="false"><use href="#rt-tile"/><g transform="translate(-1 0)" filter="url(#rt-chalk)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="30" r="10" stroke-width="3"/><path d="M32 20a10 10 0 0 1 0 20z" fill="#fff" stroke="none"/></g></svg>The service measures text contrast on the first screen of the pages checked. It does not find everything.</li>
+          <li><svg viewBox="0 0 64 64" width="56" height="56" aria-hidden="true" focusable="false"><use href="#rt-tile"/><g transform="translate(-1 0)" filter="url(#rt-chalk)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><rect x="21" y="21" width="22" height="18" rx="2.5" stroke-width="3"/><path d="M24 35l6-7 4 4 3-3 4 5" stroke-width="2.7"/><path d="M19 43L45 17" stroke-width="3"/></g></svg>Text over images, gradients or overlays is shown as "Not measurable", not rated.</li>
+          <li><svg viewBox="0 0 64 64" width="56" height="56" aria-hidden="true" focusable="false"><use href="#rt-tile"/><g transform="translate(-1 0)" filter="url(#rt-chalk)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><rect x="21" y="19" width="22" height="22" rx="2.5" stroke-width="3"/><rect x="27" y="25" width="10" height="10" rx="1.5" stroke-width="2.7"/></g></svg>Plus automated checks of the page structure.</li>
+          <li><svg viewBox="0 0 64 64" width="56" height="56" aria-hidden="true" focusable="false"><use href="#rt-tile"/><g transform="translate(-1 0)" filter="url(#rt-chalk)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><rect x="20" y="22" width="24" height="16" rx="3.5" stroke-width="3"/><circle cx="32" cy="30" r="2.4" fill="#fff" stroke="none"/></g></svg>Every finding is marked on the screenshot. The report is not a conformity statement.</li>
         </ul>
         </div>
 

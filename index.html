@@ -89,7 +89,7 @@
     header.hero { padding: 72px 0 40px; }
     header.hero { position: relative; }
     .top-link {
-      position: absolute; top: 72px; right: 0;
+      position: absolute; top: 74px; right: 0;
       display: inline-flex; align-items: center; gap: 6px; min-height: 44px;
       padding: 8px 14px; border: 1px solid var(--border); border-radius: 999px;
       font-size: 15px; font-weight: 600; line-height: 1.2;
@@ -98,20 +98,12 @@
     .top-link:hover { background: var(--bg-soft); }
     .top-link:focus-visible { outline: 3px solid var(--fg-soft); outline-offset: 3px; }
     .brand {
-      display: inline-flex; align-items: center; gap: 10px;
-      font-weight: 700; letter-spacing: -0.01em; font-size: 15px;
-      color: var(--fg-faint); text-transform: uppercase;
-      margin-bottom: 28px;
+      display: inline-flex; align-items: center; min-height: 48px;
+      line-height: 0; text-decoration: none; margin-bottom: 28px;
     }
-    .brand .dot {
-      width: 12px; height: 12px; border-radius: 50%;
-      border: 2.5px solid var(--accent);
-      position: relative;
-    }
-    .brand .dot::after {
-      content: ""; position: absolute; inset: 2.5px;
-      border-radius: 50%; background: var(--accent);
-    }
+    .brand svg { display: block; width: 148px; height: 48px; transform: translateY(2px); }
+    .brand:focus-visible { outline: 3px solid var(--link); outline-offset: 3px; border-radius: 4px; }
+    @media (max-width: 360px) { .brand svg { width: 124px; height: 40px; } .brand { min-height: 44px; } }
     h1 {
       font-size: clamp(30px, 6vw, 46px);
       line-height: 1.12;
@@ -267,10 +259,11 @@
   </script>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><linearGradient id="rt-glass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7b8189" stop-opacity=".60"/><stop offset="1" stop-color="#5f656d" stop-opacity=".66"/></linearGradient><linearGradient id="rt-sheen" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".20"/><stop offset=".45" stop-color="#fff" stop-opacity=".03"/><stop offset="1" stop-color="#fff" stop-opacity=".10"/></linearGradient><filter id="rt-chalk" x="-6%" y="-30%" width="112%" height="160%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="2" seed="21" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.5" xChannelSelector="R" yChannelSelector="G" result="rough"/><feTurbulence type="fractalNoise" baseFrequency="0.35 0.9" numOctaves="2" seed="8" result="streak"/><feColorMatrix in="streak" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 -1.9 1.95" result="sA"/><feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="1" seed="2" result="grain"/><feColorMatrix in="grain" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 -3 2.75" result="gA"/><feComposite in="rough" in2="sA" operator="in" result="c1"/><feComposite in="c1" in2="gA" operator="in" result="core"/><feGaussianBlur in="rough" stdDeviation="1.6" result="d0"/><feColorMatrix in="d0" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .30 0" result="dust"/><feGaussianBlur in="rough" stdDeviation=".9" result="s0"/><feOffset in="s0" dy=".8" result="s1"/><feColorMatrix in="s1" type="matrix" values="0 0 0 0 .12  0 0 0 0 .18  0 0 0 0 .22  0 0 0 .5 0" result="shade"/><feMerge><feMergeNode in="shade"/><feMergeNode in="dust"/><feMergeNode in="core"/></feMerge></filter><filter id="rt-soft2" x="-20%" y="-60%" width="140%" height="260%"><feGaussianBlur stdDeviation="1.4"/></filter><symbol id="rt-logo" viewBox="0 0 260 84"><rect x="11.5" y="14" width="240" height="54" rx="3.5" fill="#10151c" opacity=".09" filter="url(#rt-soft2)"/><rect x="10" y="10" width="240" height="54" rx="3.5" fill="url(#rt-glass)"/><rect x="10" y="10" width="240" height="54" rx="3.5" fill="url(#rt-sheen)"/><clipPath id="rt-lc"><rect x="10" y="10" width="240" height="54" rx="3.5"/></clipPath><g clip-path="url(#rt-lc)" fill="#fff"><path d="M78 10h30l-31 54h-30z" opacity=".15"/><path d="M117 10h10l-31 54h-10z" opacity=".10"/></g><rect x="10.35" y="10.35" width="239.3" height="53.3" rx="3.2" fill="none" stroke="#3d444d" stroke-opacity=".42" stroke-width=".8"/><rect x="11.35" y="11.35" width="237.3" height="51.3" rx="2.3" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width=".45"/><g transform="translate(0 1.5)"><g filter="url(#rt-chalk)" fill="none" stroke="#fff" stroke-width="4.7" stroke-linecap="round" stroke-linejoin="round"><path transform="translate(43.2 -0.4) rotate(-1.0 7.5 37)" d="M0 50.3 L0.6 24.2 M0.4 24.6 C9.5 23 15.4 25.6 14.8 31 C14.2 36.6 7.6 37.9 0.8 37.2 M6.4 37.6 L15.4 50.4"/><path transform="translate(71.4 -0.1) rotate(-0.8 7.2 37)" d="M14.2 24.7 L0.5 24.1 L0 50.2 L14.6 49.6 M0.4 37.2 L11.2 36.6"/><path transform="translate(99.1 -0.6) rotate(-0.2 9.0 37)" d="M-0.6 24.8 L17.6 24 M8.3 24.3 L8.8 50.4"/><path transform="translate(130.2 0.6) rotate(0.7 0.8 37)" d="M0.9 23.9 L0.3 50.3"/><path transform="translate(144.9 0.4) rotate(-0.7 8.5 37)" d="M16.2 28.6 C12 22.6 1.6 22.8 0.6 36.4 C-0.4 49 10.4 53.4 16.8 45.8"/><path transform="translate(175.1 0.1) rotate(-0.5 7.0 37)" d="M0.7 24 L0 49.9 L13.8 49.4"/><path transform="translate(202.3 -0.5) rotate(-0.9 7.2 37)" d="M14.2 24.7 L0.5 24.1 L0 50.2 L14.6 49.6 M0.4 37.2 L11.2 36.6"/></g></g></symbol><symbol id="rt-tile" viewBox="0 0 64 64"><rect x="9.2" y="11" width="46" height="44" rx="3.5" fill="#10151c" opacity=".09" filter="url(#rt-soft2)"/><rect x="8" y="8" width="46" height="44" rx="3.5" fill="url(#rt-glass)"/><rect x="8" y="8" width="46" height="44" rx="3.5" fill="url(#rt-sheen)"/><clipPath id="rt-tc"><rect x="8" y="8" width="46" height="44" rx="3.5"/></clipPath><g clip-path="url(#rt-tc)" fill="#fff"><path d="M24 8h10L9 52H-1z" opacity=".15"/><path d="M38 8h4L17 52h-4z" opacity=".10"/></g><rect x="8.35" y="8.35" width="45.3" height="43.3" rx="3.2" fill="none" stroke="#3d444d" stroke-opacity=".42" stroke-width=".8"/><rect x="9.35" y="9.35" width="43.3" height="41.3" rx="2.3" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width=".45"/></symbol></defs></svg>
   <div class="wrap">
 
     <header class="hero">
-      <div class="brand"><span class="dot"></span> Reticle</div>
+      <a class="brand" href="/" aria-label="Reticle"><svg viewBox="0 0 260 84" width="148" height="48" aria-hidden="true" focusable="false"><use href="#rt-logo"/></svg></a>
       <a class="top-link" href="/access/">Accessibility check <span aria-hidden="true">→</span></a>
       <h1>Finds and marks what you name, <span class="accent">on any screen.</span><br>On-device.</h1>
       <p class="lede">Name a control or a piece of content. Reticle locates it and marks it, right where it lives — on any app, any surface, from your exact point of view. A non-invasive AI layer between you and the machine: nothing leaves it, and nothing inside it is touched.</p>
