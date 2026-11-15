@@ -36,6 +36,8 @@
       --fg-soft: #4a4f5a;
       --fg-faint: #6b7280;
       --accent: #e8552b;
+      --link: #b93f17;
+      --btn: #b93f17;
       --accent-soft: rgba(232, 85, 43, 0.10);
       --border: #e4e6eb;
       --card: #ffffff;
@@ -49,6 +51,7 @@
         --fg-soft: #b6bcc8;
         --fg-faint: #858c9a;
         --accent: #ff6a3d;
+        --link: #ff6a3d;
         --accent-soft: rgba(255, 106, 61, 0.12);
         --border: #232830;
         --card: #14171d;
@@ -57,12 +60,12 @@
     }
     :root[data-theme="light"] {
       --bg: #ffffff; --bg-soft: #f5f6f8; --fg: #16181d; --fg-soft: #4a4f5a;
-      --fg-faint: #6b7280; --accent: #e8552b; --accent-soft: rgba(232,85,43,.10);
+      --fg-faint: #6b7280; --accent: #e8552b; --link: #b93f17; --accent-soft: rgba(232,85,43,.10);
       --border: #e4e6eb; --card: #ffffff; --shadow: 0 1px 3px rgba(0,0,0,.06), 0 8px 30px rgba(0,0,0,.05);
     }
     :root[data-theme="dark"] {
       --bg: #0d0f13; --bg-soft: #14171d; --fg: #f2f4f8; --fg-soft: #b6bcc8;
-      --fg-faint: #858c9a; --accent: #ff6a3d; --accent-soft: rgba(255,106,61,.12);
+      --fg-faint: #858c9a; --accent: #ff6a3d; --link: #ff6a3d; --accent-soft: rgba(255,106,61,.12);
       --border: #232830; --card: #14171d; --shadow: 0 1px 3px rgba(0,0,0,.4), 0 12px 40px rgba(0,0,0,.35);
     }
 
@@ -87,11 +90,13 @@
     header.hero { position: relative; }
     .top-link {
       position: absolute; top: 72px; right: 0;
+      display: inline-flex; align-items: center; gap: 6px; min-height: 44px;
+      padding: 8px 14px; border: 1px solid var(--border); border-radius: 999px;
       font-size: 15px; font-weight: 600; line-height: 1.2;
-      color: var(--fg-soft); text-decoration: underline;
-      text-decoration-color: var(--accent); text-underline-offset: 3px;
+      color: var(--fg); text-decoration: none;
     }
-    .top-link:focus-visible { outline: 3px solid var(--fg-soft); outline-offset: 3px; border-radius: 3px; }
+    .top-link:hover { background: var(--bg-soft); }
+    .top-link:focus-visible { outline: 3px solid var(--fg-soft); outline-offset: 3px; }
     .brand {
       display: inline-flex; align-items: center; gap: 10px;
       font-weight: 700; letter-spacing: -0.01em; font-size: 15px;
@@ -159,6 +164,23 @@
     .cred p { margin: 0; color: var(--fg); font-size: 16px; }
     .cred .prs { margin-top: 10px; font-size: 15px; color: var(--fg-faint); }
     .cred .prs a { font-weight: 600; }
+
+    /* Service band */
+    .band {
+      background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+      padding: 24px; margin: 32px 0 0; box-shadow: var(--shadow);
+    }
+    .band h2 {
+      font-size: clamp(20px, 3.4vw, 24px); text-transform: none; letter-spacing: -0.015em;
+      color: var(--fg); margin: 0 0 12px; font-weight: 800; line-height: 1.25;
+    }
+    .band p { margin: 0 0 20px; }
+    .band .btn-primary {
+      display: inline-flex; align-items: center; min-height: 44px; padding: 12px 20px;
+      background: var(--btn); color: #fff; border-radius: 10px; font-weight: 700; text-decoration: none;
+    }
+    .band .btn-primary:hover { text-decoration: underline; }
+    .band .btn-primary:focus-visible { outline: 3px solid var(--link); outline-offset: 3px; }
 
     /* CTA */
     .cta { text-align: center; padding: 52px 0 40px; }
@@ -249,7 +271,7 @@
 
     <header class="hero">
       <div class="brand"><span class="dot"></span> Reticle</div>
-      <a class="top-link" href="/access/">Accessibility check</a>
+      <a class="top-link" href="/access/">Accessibility check <span aria-hidden="true">→</span></a>
       <h1>Finds and marks what you name, <span class="accent">on any screen.</span><br>On-device.</h1>
       <p class="lede">Name a control or a piece of content. Reticle locates it and marks it, right where it lives — on any app, any surface, from your exact point of view. A non-invasive AI layer between you and the machine: nothing leaves it, and nothing inside it is touched.</p>
       <figure class="demo">
@@ -262,6 +284,12 @@
         <figcaption>Where Reticle is going — the co-driver film (2½ min): it sees what you see, thinks it through with you, and leaves the decision to you. Concept animation, not a recording of working software. Press play, sound on.</figcaption>
       </figure>
     </header>
+
+    <div class="band">
+      <h2>Accessibility check: text contrast and automated checks</h2>
+      <p>I build an engine that finds and marks accessibility problems on websites and web applications, reading both the rendered screen and the page's structure.</p>
+      <a class="btn-primary" href="/access/#en">Accessibility check</a>
+    </div>
 
     <section>
       <h2>What it is</h2>

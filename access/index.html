@@ -24,37 +24,47 @@
   <style>
     :root {
       --bg: #ffffff;
+      --bg-soft: #f5f6f8;
       --fg: #16181d;
       --fg-soft: #4a4f5a;
       --fg-faint: #6b7280;
       --accent: #e8552b;
       --link: #b93f17;
+      --btn: #b93f17;
       --border: #e4e6eb;
-      --error: #b42318;
-      --ok: #146c2e;
+      --bar: #d3d6dc;
+      --bar-light: #cfd2d8;
+      --g1: #c9d6ea;
+      --g2: #f0d5c8;
+      --tag: #16181d;
     }
     @media (prefers-color-scheme: dark) {
       :root {
         --bg: #0d0f13;
+        --bg-soft: #14171d;
         --fg: #f2f4f8;
         --fg-soft: #b6bcc8;
         --fg-faint: #858c9a;
         --accent: #ff6a3d;
         --link: #ff6a3d;
+        --btn: #b93f17;
         --border: #232830;
-        --error: #ff8a80;
-        --ok: #6fdc8c;
+        --bar: #2e343e;
+        --bar-light: #4a505b;
+        --g1: #2a3a55;
+        --g2: #4a2f2a;
+        --tag: #16181d;
       }
     }
     :root[data-theme="light"] {
-      --bg: #ffffff; --fg: #16181d; --fg-soft: #4a4f5a; --fg-faint: #6b7280;
-      --accent: #e8552b; --link: #b93f17; --border: #e4e6eb;
-      --error: #b42318; --ok: #146c2e;
+      --bg: #ffffff; --bg-soft: #f5f6f8; --fg: #16181d; --fg-soft: #4a4f5a; --fg-faint: #6b7280;
+      --accent: #e8552b; --link: #b93f17; --btn: #b93f17; --border: #e4e6eb;
+      --bar: #d3d6dc; --bar-light: #cfd2d8; --g1: #c9d6ea; --g2: #f0d5c8; --tag: #16181d;
     }
     :root[data-theme="dark"] {
-      --bg: #0d0f13; --fg: #f2f4f8; --fg-soft: #b6bcc8; --fg-faint: #858c9a;
-      --accent: #ff6a3d; --link: #ff6a3d; --border: #232830;
-      --error: #ff8a80; --ok: #6fdc8c;
+      --bg: #0d0f13; --bg-soft: #14171d; --fg: #f2f4f8; --fg-soft: #b6bcc8; --fg-faint: #858c9a;
+      --accent: #ff6a3d; --link: #ff6a3d; --btn: #b93f17; --border: #232830;
+      --bar: #2e343e; --bar-light: #4a505b; --g1: #2a3a55; --g2: #4a2f2a; --tag: #16181d;
     }
 
     * { box-sizing: border-box; }
@@ -69,14 +79,17 @@
       -webkit-font-smoothing: antialiased;
     }
     a { color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
-    a:focus-visible { outline: 3px solid var(--link); outline-offset: 3px; border-radius: 3px; }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--link); outline-offset: 3px; border-radius: 3px; }
     .wrap { max-width: 760px; margin: 0 auto; padding: 0 24px; }
 
-    header.top { padding: 56px 0 8px; }
+    header.top {
+      padding: 40px 0 8px;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    }
     .brand {
-      display: inline-flex; align-items: center; gap: 10px;
+      display: inline-flex; align-items: center; gap: 10px; min-height: 44px;
       font-weight: 700; letter-spacing: -0.01em; font-size: 15px;
-      color: var(--fg-faint); text-transform: uppercase;
+      color: var(--fg-faint); text-transform: uppercase; text-decoration: none;
     }
     .brand .dot {
       width: 12px; height: 12px; border-radius: 50%;
@@ -87,109 +100,225 @@
       content: ""; position: absolute; inset: 2.5px;
       border-radius: 50%; background: var(--accent);
     }
+    .lang { display: inline-flex; border: 2px solid var(--fg-faint); border-radius: 8px; overflow: hidden; }
+    .lang button {
+      font: inherit; font-size: 15px; font-weight: 600; min-height: 44px; min-width: 44px; padding: 0 14px;
+      background: var(--bg); color: var(--fg); border: 0; cursor: pointer;
+    }
+    .lang button + button { border-left: 2px solid var(--fg-faint); }
+    .lang button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+    .lang button:focus-visible { outline-offset: -5px; }
+    .lang button[aria-pressed="true"]:focus-visible { outline-color: var(--bg); }
 
-    section { padding: 40px 0; border-top: 1px solid var(--border); }
-    section:first-of-type { border-top: none; }
+    section { padding: 0; margin: 32px 0 0; }
+    section[hidden] { display: none; }
+    .hero {
+      background: var(--bg-soft); border: 1px solid var(--border); border-radius: 14px;
+      padding: clamp(24px, 5vw, 40px);
+    }
+    .hero p:last-of-type { margin-bottom: 0; }
     .title {
-      font-size: clamp(28px, 5.5vw, 40px);
-      line-height: 1.15;
+      font-size: clamp(28px, 5.5vw, 44px);
+      line-height: 1.12;
       letter-spacing: -0.025em;
       margin: 0 0 22px;
       font-weight: 800;
       color: var(--fg);
     }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .actions p, .block p.actions { margin: 0; }
+    .btn {
+      display: inline-flex; align-items: center; min-height: 44px; padding: 12px 20px;
+      border-radius: 10px; font-weight: 700; text-decoration: none;
+      background: var(--btn); color: #fff; border: 1px solid var(--btn);
+    }
+    .btn.secondary { background: transparent; color: var(--link); border-color: var(--link); }
+    .btn:hover { text-decoration: underline; }
+    .block { margin-top: 56px; }
     .sub {
       font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em;
-      color: var(--fg-faint); margin: 32px 0 12px; font-weight: 700;
+      color: var(--fg-faint); margin: 0 0 14px; font-weight: 700;
     }
     p { margin: 0 0 18px; color: var(--fg-soft); }
+    .block p:last-child { margin-bottom: 0; }
     .lede { font-size: clamp(17px, 2.4vw, 20px); color: var(--fg-soft); }
     ul { margin: 0 0 18px; padding-left: 1.2em; color: var(--fg-soft); }
     li { margin: 0 0 8px; }
     li::marker { color: var(--fg-faint); }
+    ul.cards {
+      list-style: none; padding: 0; margin: 0;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    ul.cards li {
+      margin: 0; padding: 18px; border: 1px solid var(--border); border-radius: 12px;
+      background: var(--bg);
+    }
+    ul.cards svg { display: block; width: 28px; height: 28px; margin: 0 0 12px; color: var(--accent); }
+    @media (max-width: 639px) { ul.cards { grid-template-columns: 1fr; } }
+
+    figure.example { margin: 56px 0 0; }
+    figure.example svg { width: 100%; height: auto; display: block; font-family: inherit; }
+    figure.example figcaption { font-size: 13.5px; color: var(--fg-faint); margin-top: 10px; text-align: center; }
+    .s-win { fill: var(--bg); stroke: var(--border); stroke-width: 2; }
+    .s-bar { fill: var(--bg-soft); stroke: var(--border); stroke-width: 1; }
+    .s-dot { fill: var(--bar); }
+    .s-pill { fill: var(--bg); stroke: var(--border); }
+    .s-line { fill: var(--bar); }
+    .s-light { fill: var(--bar-light); }
+    .s-find { fill: none; stroke: var(--accent); stroke-width: 3; }
+    .s-dash { fill: none; stroke: var(--fg-faint); stroke-width: 2.5; stroke-dasharray: 9 7; }
+    .s-over { fill: #fff; opacity: .75; }
+    .s-tag { fill: var(--tag); stroke: var(--fg-faint); stroke-width: 1; }
+    .s-tagtxt { fill: #fff; font-size: 21px; font-weight: 700; text-anchor: middle; }
 
     footer {
       border-top: 1px solid var(--border);
+      margin-top: 56px;
       padding: 28px 0 48px;
       text-align: center;
       color: var(--fg-faint);
       font-size: 14px;
     }
     footer p { color: var(--fg-faint); margin: 0 0 8px; }
-
-    .contact-form { margin: 0 0 18px; }
-    .field { margin: 0 0 20px; }
-    .contact-form label { display: block; font-weight: 600; margin: 0 0 6px; color: var(--fg); }
-    .req { font-weight: 400; color: var(--fg-soft); }
-    .contact-form input, .contact-form textarea {
-      width: 100%; font: inherit; color: var(--fg); background: var(--bg);
-      border: 2px solid var(--fg-faint); border-radius: 6px; padding: 10px 12px;
-    }
-    .contact-form textarea { min-height: 160px; resize: vertical; }
-    .contact-form [aria-invalid="true"] { border-color: var(--error); }
-    .contact-form :focus-visible { outline: 3px solid var(--link); outline-offset: 3px; }
-    .err { color: var(--error); font-size: 15px; margin: 6px 0 0; font-weight: 600; }
-    .err:empty { display: none; }
-    .hint { font-size: 15px; margin: 6px 0 0; }
-    .contact-form button {
-      font: inherit; font-weight: 700; padding: 12px 22px; border-radius: 6px; cursor: pointer;
-      background: var(--fg); color: var(--bg); border: 2px solid var(--fg);
-    }
-    .contact-form button[disabled] { cursor: progress; }
-    .status { margin: 20px 0 0; font-weight: 600; min-height: 1.6em; }
-    .status.is-error { color: var(--error); }
-    .status.is-ok { color: var(--ok); }
-    .hp { position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
   </style>
 </head>
 <body>
   <div class="wrap">
 
     <header class="top">
-      <div class="brand"><span class="dot" aria-hidden="true"></span> Reticle</div>
+      <a class="brand" href="/" aria-label="Reticle"><span class="dot" aria-hidden="true"></span> Reticle</a>
+      <div class="lang" role="group" aria-label="Sprache" id="langgrp">
+        <button type="button" data-lang="de" aria-pressed="true" hidden>Deutsch</button>
+        <button type="button" data-lang="en" aria-pressed="false" hidden>English</button>
+      </div>
     </header>
 
     <main>
       <section id="de" lang="de">
-        <h1 class="title">Barrierefreiheit prüfen: Textkontrast und automatische Prüfungen</h1>
-        <p class="lede">Ich entwickle eine Engine, die Barrierefreiheitsprobleme auf Websites und Webanwendungen findet und markiert und dabei sowohl den gerenderten Bildschirm als auch die Struktur der Seite liest.</p>
-        <p>Das geschieht automatisiert und KI-gestützt, ohne Einbau in Ihre Website, wo nötig mit Handprüfung.</p>
+        <div class="hero">
+          <h1 class="title">Barrierefreiheit prüfen: Textkontrast und automatische Prüfungen</h1>
+          <p class="lede">Ich entwickle eine Engine, die Barrierefreiheitsprobleme auf Websites und Webanwendungen findet und markiert und dabei sowohl den gerenderten Bildschirm als auch die Struktur der Seite liest.</p>
+          <p>Das geschieht automatisiert und KI-gestützt, ohne Einbau in Ihre Website, wo nötig mit Handprüfung.</p>
+          <div class="actions">
+            <a class="btn" href="https://app.getreticle.com/kontakt">Zum Kontaktformular</a>
+            <a class="btn secondary" href="mailto:niv@getreticle.com">niv@getreticle.com</a>
+          </div>
+        </div>
 
+        <figure class="example">
+          <svg viewBox="0 0 720 360" role="img" aria-label="Schematisches Beispiel: ein Bildschirmbild mit einem markierten Befund zum Textkontrast und einem als nicht messbar ausgewiesenen Text über einem Bild." xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="picK" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--g1)"/><stop offset="1" style="stop-color:var(--g2)"/></linearGradient></defs>
+            <rect class="s-win" x="10" y="10" width="700" height="340" rx="12"/>
+            <path class="s-bar" d="M10 50 V22 a12 12 0 0 1 12 -12 H698 a12 12 0 0 1 12 12 V50 Z"/>
+            <circle class="s-dot" cx="34" cy="30" r="5.5"/><circle class="s-dot" cx="54" cy="30" r="5.5"/><circle class="s-dot" cx="74" cy="30" r="5.5"/>
+            <rect class="s-pill" x="104" y="19" width="360" height="22" rx="11"/>
+            <rect class="s-line" x="34" y="78" width="300" height="10" rx="5"/>
+            <rect class="s-line" x="34" y="100" width="250" height="10" rx="5"/>
+            <rect class="s-line" x="34" y="122" width="320" height="10" rx="5"/>
+            <rect class="s-find" x="34" y="178" width="320" height="72" rx="10"/>
+            <rect class="s-light" x="52" y="200" width="270" height="9" rx="4.5"/>
+            <rect class="s-light" x="52" y="222" width="190" height="9" rx="4.5"/>
+            <rect class="s-tag" x="44" y="161" width="190" height="34" rx="8"/>
+            <text class="s-tagtxt" x="139" y="184">Kontrast 2,9:1</text>
+            <rect class="s-line" x="34" y="278" width="290" height="10" rx="5"/>
+            <rect class="s-line" x="34" y="300" width="220" height="10" rx="5"/>
+            <rect x="394" y="90" width="292" height="230" rx="8" fill="url(#picK)"/>
+            <rect class="s-over" x="418" y="150" width="220" height="10" rx="5"/>
+            <rect class="s-over" x="418" y="174" width="244" height="10" rx="5"/>
+            <rect class="s-over" x="418" y="198" width="170" height="10" rx="5"/>
+            <rect class="s-dash" x="384" y="80" width="312" height="250" rx="12"/>
+            <rect class="s-tag" x="404" y="63" width="190" height="34" rx="8"/>
+            <text class="s-tagtxt" x="499" y="86">Nicht messbar</text>
+          </svg>
+          <figcaption>Beispiel, schematisch</figcaption>
+        </figure>
+
+        <div class="block">
         <h2 class="sub">Was der Bericht enthält</h2>
-        <ul>
-          <li>Der Dienst misst Textkontraste im ersten Bildschirm geprüfter Seiten. Er findet nicht alles.</li>
-          <li>Text über Bildern, Verläufen oder Überlagerungen wird als „Nicht messbar“ ausgewiesen, nicht bewertet.</li>
-          <li>Dazu automatisierte Prüfungen der Seitenstruktur.</li>
-          <li>Jeder Befund ist im Bildschirmbild markiert. Der Bericht ist keine Konformitätserklärung.</li>
+        <ul class="cards">
+          <li><svg viewBox="0 0 28 28" aria-hidden="true" focusable="false"><circle cx="14" cy="14" r="11" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M14 3 a11 11 0 0 1 0 22 Z" fill="currentColor"/></svg>Der Dienst misst Textkontraste im ersten Bildschirm geprüfter Seiten. Er findet nicht alles.</li>
+          <li><svg viewBox="0 0 28 28" aria-hidden="true" focusable="false"><rect x="3" y="4" width="22" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="2.5"/><circle cx="10" cy="11" r="2.2" fill="currentColor"/><path d="M3 20 l7 -6 l5 4 l4 -3 l6 5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 26 L24 2" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>Text über Bildern, Verläufen oder Überlagerungen wird als „Nicht messbar“ ausgewiesen, nicht bewertet.</li>
+          <li><svg viewBox="0 0 28 28" aria-hidden="true" focusable="false"><rect x="3" y="3" width="22" height="22" rx="3" fill="none" stroke="currentColor" stroke-width="2.5"/><rect x="8" y="8" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2.5"/><rect x="12" y="12" width="4" height="4" fill="currentColor"/></svg>Dazu automatisierte Prüfungen der Seitenstruktur.</li>
+          <li><svg viewBox="0 0 28 28" aria-hidden="true" focusable="false"><rect x="3" y="6" width="22" height="16" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/><circle cx="14" cy="14" r="3.2" fill="currentColor"/></svg>Jeder Befund ist im Bildschirmbild markiert. Der Bericht ist keine Konformitätserklärung.</li>
         </ul>
+        </div>
 
+        <div class="block">
         <h2 class="sub">Lieferung</h2>
         <p>Als Bericht im Browser und als PDF.</p>
+        </div>
 
+        <div class="block">
         <h2 class="sub">Kontakt</h2>
-        <p id="kontakt"><a href="https://app.getreticle.com/kontakt">Zum Kontaktformular</a></p>
-        <p><a href="mailto:niv@getreticle.com">niv@getreticle.com</a></p>
+        <p class="actions" id="kontakt">
+          <a class="btn" href="https://app.getreticle.com/kontakt">Zum Kontaktformular</a>
+          <a class="btn secondary" href="mailto:niv@getreticle.com">niv@getreticle.com</a>
+        </p>
+        </div>
       </section>
 
       <section id="en" lang="en">
-        <h2 class="title">Accessibility check: text contrast and automated checks</h2>
-        <p class="lede">I build an engine that finds and marks accessibility problems on websites and web applications, reading both the rendered screen and the page's structure.</p>
-        <p>It is automated and AI-supported, with nothing to install on your website, and with a manual check where needed.</p>
+        <div class="hero">
+          <h2 class="title">Accessibility check: text contrast and automated checks</h2>
+          <p class="lede">I build an engine that finds and marks accessibility problems on websites and web applications, reading both the rendered screen and the page's structure.</p>
+          <p>It is automated and AI-supported, with nothing to install on your website, and with a manual check where needed.</p>
+          <div class="actions">
+            <a class="btn" href="https://app.getreticle.com/kontakt">Open the contact form</a>
+            <a class="btn secondary" href="mailto:niv@getreticle.com">niv@getreticle.com</a>
+          </div>
+        </div>
 
+        <figure class="example">
+          <svg viewBox="0 0 720 360" role="img" aria-label="Schematic example: a screenshot with one marked text-contrast finding and one text over an image shown as not measurable." xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="picC" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--g1)"/><stop offset="1" style="stop-color:var(--g2)"/></linearGradient></defs>
+            <rect class="s-win" x="10" y="10" width="700" height="340" rx="12"/>
+            <path class="s-bar" d="M10 50 V22 a12 12 0 0 1 12 -12 H698 a12 12 0 0 1 12 12 V50 Z"/>
+            <circle class="s-dot" cx="34" cy="30" r="5.5"/><circle class="s-dot" cx="54" cy="30" r="5.5"/><circle class="s-dot" cx="74" cy="30" r="5.5"/>
+            <rect class="s-pill" x="104" y="19" width="360" height="22" rx="11"/>
+            <rect class="s-line" x="34" y="78" width="300" height="10" rx="5"/>
+            <rect class="s-line" x="34" y="100" width="250" height="10" rx="5"/>
+            <rect class="s-line" x="34" y="122" width="320" height="10" rx="5"/>
+            <rect class="s-find" x="34" y="178" width="320" height="72" rx="10"/>
+            <rect class="s-light" x="52" y="200" width="270" height="9" rx="4.5"/>
+            <rect class="s-light" x="52" y="222" width="190" height="9" rx="4.5"/>
+            <rect class="s-tag" x="44" y="161" width="190" height="34" rx="8"/>
+            <text class="s-tagtxt" x="139" y="184">Contrast 2.9:1</text>
+            <rect class="s-line" x="34" y="278" width="290" height="10" rx="5"/>
+            <rect class="s-line" x="34" y="300" width="220" height="10" rx="5"/>
+            <rect x="394" y="90" width="292" height="230" rx="8" fill="url(#picC)"/>
+            <rect class="s-over" x="418" y="150" width="220" height="10" rx="5"/>
+            <rect class="s-over" x="418" y="174" width="244" height="10" rx="5"/>
+            <rect class="s-over" x="418" y="198" width="170" height="10" rx="5"/>
+            <rect class="s-dash" x="384" y="80" width="312" height="250" rx="12"/>
+            <rect class="s-tag" x="404" y="63" width="190" height="34" rx="8"/>
+            <text class="s-tagtxt" x="499" y="86">Not measurable</text>
+          </svg>
+          <figcaption>Example, schematic</figcaption>
+        </figure>
+
+        <div class="block">
         <h3 class="sub">What the report contains</h3>
-        <ul>
-          <li>The service measures text contrast on the first screen of the pages checked. It does not find everything.</li>
-          <li>Text over images, gradients or overlays is shown as "Not measurable", not rated.</li>
-          <li>Plus automated checks of the page structure.</li>
-          <li>Every finding is marked on the screenshot. The report is not a conformity statement.</li>
+        <ul class="cards">
+          <li><svg viewBox="0 0 28 28" aria-hidden="true" focusable="false"><circle cx="14" cy="14" r="11" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M14 3 a11 11 0 0 1 0 22 Z" fill="currentColor"/></svg>The service measures text contrast on the first screen of the pages checked. It does not find everything.</li>
+          <li><svg viewBox="0 0 28 28" aria-hidden="true" focusable="false"><rect x="3" y="4" width="22" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="2.5"/><circle cx="10" cy="11" r="2.2" fill="currentColor"/><path d="M3 20 l7 -6 l5 4 l4 -3 l6 5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 26 L24 2" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>Text over images, gradients or overlays is shown as "Not measurable", not rated.</li>
+          <li><svg viewBox="0 0 28 28" aria-hidden="true" focusable="false"><rect x="3" y="3" width="22" height="22" rx="3" fill="none" stroke="currentColor" stroke-width="2.5"/><rect x="8" y="8" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2.5"/><rect x="12" y="12" width="4" height="4" fill="currentColor"/></svg>Plus automated checks of the page structure.</li>
+          <li><svg viewBox="0 0 28 28" aria-hidden="true" focusable="false"><rect x="3" y="6" width="22" height="16" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/><circle cx="14" cy="14" r="3.2" fill="currentColor"/></svg>Every finding is marked on the screenshot. The report is not a conformity statement.</li>
         </ul>
+        </div>
 
+        <div class="block">
         <h3 class="sub">Delivery</h3>
         <p>As a report in the browser and as a PDF.</p>
+        </div>
 
+        <div class="block">
         <h3 class="sub">Contact</h3>
-        <p id="contact"><a href="https://app.getreticle.com/kontakt">Open the contact form</a></p>
-        <p><a href="mailto:niv@getreticle.com">niv@getreticle.com</a></p>
+        <p class="actions" id="contact">
+          <a class="btn" href="https://app.getreticle.com/kontakt">Open the contact form</a>
+          <a class="btn secondary" href="mailto:niv@getreticle.com">niv@getreticle.com</a>
+        </p>
+        </div>
       </section>
     </main>
 
@@ -199,5 +328,40 @@
     </footer>
 
   </div>
+  <script>
+    (function () {
+      var de = document.getElementById('de'), en = document.getElementById('en');
+      var btns = document.querySelectorAll('.lang button');
+      var enTitle = en.querySelector('.title'), enSubs = en.querySelectorAll('.sub');
+      function pick() {
+        var h = (location.hash || '').toLowerCase();
+        if (h === '#en') return 'en';
+        if (h === '#de') return 'de';
+        try { var s = localStorage.getItem('lang'); if (s === 'de' || s === 'en') return s; } catch (e) {}
+        var n = (navigator.language || '').toLowerCase();
+        if (n.indexOf('de') === 0) return 'de';
+        if (n.indexOf('en') === 0) return 'en';
+        return 'de';
+      }
+      function set(l, save) {
+        de.hidden = l !== 'de'; en.hidden = l !== 'en';
+        document.documentElement.lang = l;
+        document.getElementById('langgrp').setAttribute('aria-label', l === 'de' ? 'Sprache' : 'Language');
+        for (var i = 0; i < btns.length; i++) btns[i].setAttribute('aria-pressed', String(btns[i].getAttribute('data-lang') === l));
+        if (l === 'en') {
+          enTitle.setAttribute('role', 'heading'); enTitle.setAttribute('aria-level', '1');
+          for (var j = 0; j < enSubs.length; j++) enSubs[j].setAttribute('aria-level', '2');
+        } else {
+          enTitle.removeAttribute('role'); enTitle.removeAttribute('aria-level');
+          for (var k = 0; k < enSubs.length; k++) enSubs[k].removeAttribute('aria-level');
+        }
+        if (save) { try { localStorage.setItem('lang', l); } catch (e) {} }
+      }
+      for (var i = 0; i < btns.length; i++) btns[i].addEventListener('click', function () { set(this.getAttribute('data-lang'), true); });
+      window.addEventListener('hashchange', function () { var h = location.hash.toLowerCase(); if (h === '#en' || h === '#de') set(h.slice(1), false); });
+      set(pick(), false);
+      for (i = 0; i < btns.length; i++) btns[i].hidden = false;
+    })();
+  </script>
 </body>
 </html>
